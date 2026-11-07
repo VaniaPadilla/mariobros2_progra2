@@ -4,9 +4,11 @@
 
 #ifndef MARIO2_NPCENEMIGO_H
 #define MARIO2_NPCENEMIGO_H
+#include "Entidad.h"
 
-
-class NpcEnemigo {
+class NpcEnemigo: public Entidad
+{
+    
 };
 
 
