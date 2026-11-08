@@ -19,7 +19,7 @@ Sprite::~Sprite() {
 }
 
 
-void Sprite::dibujar(int** mundito, const Sprite& spritito, int posX, int posY) {
+void Sprite::dibujar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY) {
     for (int i=0; i <= spritito.alto; i++) {
         for (int j=0; j <= spritito.ancho; j++) {
             mundito[posX][posY] = spritito.get_matriz()[i][j];
@@ -27,7 +27,17 @@ void Sprite::dibujar(int** mundito, const Sprite& spritito, int posX, int posY) 
     }
 }
 
-void borrar(int** mundo);
+void Sprite::borrar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY) {
+    for (int i=0; i <= spritito.alto; i++) {
+        for (int j=0; j <= spritito.ancho; j++) {
+            if (posX >= 43){
+                mundito[posX][posY] = 1;
+            } else{
+                mundito[posX][posY] = 0;
+            }
+        }
+    }
+}
 
 
 void Sprite::modificar(std::vector<std::vector<int>> nuevaMat) {

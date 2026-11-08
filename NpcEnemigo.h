@@ -7,13 +7,9 @@
 #include "Entidad.h"
 
 
-class NpcEnemigo : public Entidad {
+class NpcEnemigo : public Entidad 
+{
     public:
-
-    NpcEnemigo(int x, int y);
-    ~NpcEnemigo();
-
-    void moverse(std::string direccion) override;
 };
 
 

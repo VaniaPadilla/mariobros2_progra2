@@ -22,9 +22,9 @@ public:
     Sprite (std::string nombre, int alto, int ancho);
     ~Sprite();
 
-    static void dibujar(int** mundito, const Sprite spritito, int posX, int posY);
+    static void dibujar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY);
 
-    void borrar(Mapa mundo, int posX, int posY);
+    static void borrar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY);
 
     void modificar(std::vector<std::vector<int>> nuevaMat);
 
