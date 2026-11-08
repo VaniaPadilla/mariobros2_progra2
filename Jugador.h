@@ -6,7 +6,6 @@
 #define MARIO2_JUGADOR_H
 #include "Entidad.h"
 
-
 class Jugador : public Entidad {
 private:
     int coins;
@@ -18,6 +17,4 @@ public:
 
     void moverse(std::vector<std::vector<int>>& mundo, int& posX, int& posY, std::string direccion) override;
 };
-
-#endif
-
+#endif //MARIO2_JUGADOR_H

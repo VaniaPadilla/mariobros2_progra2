@@ -18,6 +18,7 @@ Sprite::Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector
 Sprite::~Sprite() {
 }
 
+
 void Sprite::dibujar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY) {
     for (int i=0; i <= spritito.alto; i++) {
         for (int j=0; j <= spritito.ancho; j++) {

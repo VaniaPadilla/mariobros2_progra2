@@ -7,7 +7,8 @@
 #include "Entidad.h"
 
 
-class NpcEnemigo : public Entidad {
+class NpcEnemigo : public Entidad 
+{
     public:
     NpcEnemigo(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz);
     virtual ~NpcEnemigo();

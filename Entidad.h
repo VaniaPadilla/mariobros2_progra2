@@ -18,5 +18,4 @@ public:
 
 };
 
-
-#endif //MARIO2_ENTIDAD_H
+#endif //MARIO2_ENTIDAD
