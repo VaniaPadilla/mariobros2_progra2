@@ -3,3 +3,20 @@
 //
 
 #include "Entidad.h"
+Entidad::Entidad(Sprite s) :sprite(s)
+{
+}
+
+Entidad::~Entidad()
+{
+}
+
+void Entidad::dibujar(Mapa& map) 
+{
+    
+}
+
+void Entidad::borrar(Mapa& map) 
+{
+    
+}

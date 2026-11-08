@@ -5,10 +5,8 @@
 #ifndef MARIO2_JUGADOR_H
 #define MARIO2_JUGADOR_H
 #include "Entidad.h"
+class Jugador : public Entidad {
+public:
 
-class Jugador: public Entidad 
-{
 };
-
-
 #endif //MARIO2_JUGADOR_H

@@ -4,12 +4,20 @@
 
 #ifndef MARIO2_ENTIDAD_H
 #define MARIO2_ENTIDAD_H
+#include "Sprite.h"
 
-
-class Entidad {
+class Entidad
+{
     private:
+    Sprite sprite;
+    public:
     
-};
+    Entidad(Sprite _s);
+    ~Entidad();
 
+    virtual void moverse(std::string direccion) = 0;
+    void dibujar(Mapa& mapa);
+    void borrar(Mapa& mapa);
+};
 
 #endif //MARIO2_ENTIDAD_H
