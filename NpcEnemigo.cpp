@@ -4,14 +4,13 @@
 
 #include "NpcEnemigo.h"
 
+NpcEnemigo::NpcEnemigo(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz)
+    : Entidad(nombre, alto, ancho, matriz) {
+}
 
+NpcEnemigo::~NpcEnemigo() {
+}
 
-    NpcEnemigo::NpcEnemigo(int x, int y) : Entidad("Goomba", 16, 16, 1) {  
-        set_pos_x(x);
-        set_pos_y(y);
-    }
-
-    NpcEnemigo::~NpcEnemigo() {}
-
-    void NpcEnemigo::moverse(std::string direccion) {
-    }
+void moverse(std::vector<std::vector<int>>& mundo, int& posX, int& posY, std::string direccion) {
+    posX -= 12;
+}

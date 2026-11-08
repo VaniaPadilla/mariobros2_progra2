@@ -8,11 +8,15 @@
 
 
 class Jugador : public Entidad {
-public:
-    Jugador(int x, int y);
-    ~Jugador();
+private:
+    int coins;
+    bool aire;
 
-    void moverse(std::string direccion) override;
+public:
+    Jugador(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz);
+    virtual ~Jugador();
+
+    void moverse(std::vector<std::vector<int>>& mundo, int& posX, int& posY, std::string direccion) override;
 };
 
 #endif

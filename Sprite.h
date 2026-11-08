@@ -20,13 +20,14 @@ private:
 public:
 
     Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz);
-    ~Sprite();
+
+    virtual ~Sprite();
 
     static void dibujar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY);
 
     static void borrar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY);
 
-    void modificar(std::vector<std::vector<int>> nuevaMat);
+    void modificar(std::vector<std::vector<int>>& nuevaMat);
 
     static Sprite clonar(Sprite spritito);
 

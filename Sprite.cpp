@@ -39,7 +39,7 @@ void Sprite::borrar(std::vector<std::vector<int>>& mundito, const Sprite& spriti
 }
 
 
-void Sprite::modificar(std::vector<std::vector<int>> nuevaMat) {
+void Sprite::modificar(std::vector<std::vector<int>>& nuevaMat) {
     int fil = nuevaMat.size();
     int col = nuevaMat[0].size();
     for (int i=0; i <= fil; i++) {
