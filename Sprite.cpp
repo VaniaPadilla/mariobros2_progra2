@@ -6,14 +6,14 @@
 
 #include "Mapa.h"
 
-Sprite::Sprite (std::string nombre, int alto, int ancho) {
+Sprite::Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz) {
     this->nombre = nombre;
     this->alto = alto;
     this->ancho = ancho;
+    this->matriz = matriz;
     posX = 0;
     posY = 0;
 }
-
 
 Sprite::~Sprite() {
 }
@@ -50,49 +50,38 @@ void Sprite::modificar(std::vector<std::vector<int>> nuevaMat) {
     }
 }
 
-
-Sprite clonar(Sprite spritito);
+Sprite Sprite::clonar(Sprite spritito) {
+    return {spritito.nombre, spritito.alto, spritito.ancho, spritito.matriz};
+}
 
 
 std::string Sprite::get_nombre() const {
-    return nombre;
-}
+    return nombre; }
 void Sprite::set_nombre(std::string nombre) {
-    this->nombre = nombre;
-}
+    this->nombre = nombre; }
 
 std::vector<std::vector<int>> Sprite::get_matriz() const {
-    return matriz;
-}
+    return matriz; }
 void Sprite::set_matriz(std::vector<std::vector<int>> matriz) {
-    this->matriz = matriz;
-}
+    this->matriz = matriz; }
 
 int Sprite::get_alto() const {
-    return alto;
-}
+    return alto; }
 void Sprite::set_alto(int alto) {
-    this->alto = alto;
-}
+    this->alto = alto; }
 
 int Sprite::get_ancho() const {
-    return ancho;
-}
+    return ancho; }
 void Sprite::set_ancho(int ancho) {
-    this->ancho = ancho;
-}
+    this->ancho = ancho; }
 
 int Sprite::get_pos_x() const {
-    return posX;
-}
+    return posX; }
 void Sprite::set_pos_x(int pos_x) {
-    posX = pos_x;
-}
+    posX = pos_x; }
 
 int Sprite::get_pos_y() const {
-    return posY;
-}
+    return posY; }
 void Sprite::set_pos_y(int pos_y) {
-    posY = pos_y;
-}
+    posY = pos_y; }
 

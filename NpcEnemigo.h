@@ -12,5 +12,7 @@ class NpcEnemigo : public Entidad
     public:
 };
 
+    void moverse(std::string direccion) override;
+};
 
 #endif //MARIO2_NPCENEMIGO_H
