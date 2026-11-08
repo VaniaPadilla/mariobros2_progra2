@@ -17,4 +17,6 @@ add_executable(mario2 main.cpp
         Mapa.cpp
         Mapa.h
         Juego.cpp
-        Juego.h)
+        Juego.h
+        colores.cpp
+        colores.h)

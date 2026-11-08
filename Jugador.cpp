@@ -13,23 +13,26 @@ Jugador::Jugador(std::string nombre, int alto, int ancho, std::vector<std::vecto
 Jugador::~Jugador() {}
 
 // retorna la posicion actualizada del jugador
-void Jugador::moverse(std::vector<std::vector<int>>& mundo, int& posX, int& posY, std::string direccion) {
+void Jugador::moverse(std::string direccion) {
+    const int xActual = this->get_pos_x();
+    const int yActual = this->get_pos_y();
+
     if (direccion == "right") {
-        posX += 12;
+        this->set_pos_x(xActual + 12);
     }
     else if (direccion == "left") {
-        posX -= 12;
+        this->set_pos_x(xActual - 12);
     }
     else if (direccion == "top") {
-        posY -= 16;
+        this->set_pos_y(yActual - 16);
         aire = true;
     }
     else if (direccion == "up-right") {
-        posX += 12;
-        posY -= 16;
+        this->set_pos_x(xActual + 12);
+        this->set_pos_y(yActual - 16);
     }
     else if (direccion == "up-left") {
-        posX -= 12;
-        posY -= 16;
+        this->set_pos_x(xActual - 12);
+        this->set_pos_y(yActual - 16);
     }
 }

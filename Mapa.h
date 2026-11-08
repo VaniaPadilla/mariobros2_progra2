@@ -7,8 +7,10 @@
 
 #include <vector>
 
+#include "colores.h"
 #include "Elemento.h"
 #include "Entidad.h"
+#include "Jugador.h"
 
 class Mapa {
 private:
@@ -17,11 +19,29 @@ private:
     std::vector<std::vector<char>> mundoCod;
 
     int filsVentana, colsVentana;
+    int colInicialVentana;
     std::vector<std::vector<int>> ventana;
 
+    std::vector<Entidad*> entidades;
+    Jugador jugadorcito;
+
+    int coins;
+
 public:
-    Mapa(int filsMundo, int colsMundo);
+    Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador jugadorcito);
     ~Mapa();
+
+    void crearMundo();
+
+    void agregarElemento(Elemento elementito);
+
+    void agregarEntidad(Entidad* entidad);
+
+    void moverEscena();
+
+    void dibujarEscena() const;
+
+
 
     int get_fils_mundo() const;
     void set_fils_mundo(int fils_mundo);

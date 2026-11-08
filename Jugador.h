@@ -15,6 +15,6 @@ public:
     Jugador(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz);
     virtual ~Jugador();
 
-    void moverse(std::vector<std::vector<int>>& mundo, int& posX, int& posY, std::string direccion) override;
+    void moverse(std::string direccion) override;
 };
 #endif //MARIO2_JUGADOR_H
