@@ -9,10 +9,11 @@
 class Entidad
 {
     private:
+    bool vida;
     Sprite sprite;
     public:
     
-    Entidad(Sprite _s);
+    Entidad(bool _vida, Sprite _s);
     ~Entidad();
 
     virtual void moverse(std::string direccion) = 0;
@@ -20,4 +21,4 @@ class Entidad
     void borrar(Mapa& mapa);
 };
 
-#endif //MARIO2_ENTIDAD_H
+#endif //MARIO2_ENTIDAD
