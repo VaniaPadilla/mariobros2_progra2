@@ -6,33 +6,19 @@
 #define MARIO2_ENTIDAD_H
 #include "Sprite.h"
 
-
-class Mapa;
-
-struct Posicion {
-    int x;
-    int y;
-
-};
-
-class Entidad: public Sprite {
-    protected:
-    int vida;
-
+class Entidad
+{
+    private:
+    bool vida;
+    Sprite sprite;
     public:
-    Entidad(std::string nombre, int alto, int ancho, int vida);
-    virtual ~Entidad();
+    
+    Entidad(bool _vida, Sprite _s);
+    ~Entidad();
 
     virtual void moverse(std::string direccion) = 0;
-    void dibujar(Mapa& map);
-    void borrar(Mapa& map);
-    Posicion operator+(const Posicion& other) const;
-
-    int getVida() const;
-    void setVida(int vida);
-
-
+    void dibujar(Mapa& mapa);
+    void borrar(Mapa& mapa);
 };
 
-
-#endif //MARIO2_ENTIDAD_H
+#endif //MARIO2_ENTIDAD

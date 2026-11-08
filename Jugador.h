@@ -6,14 +6,8 @@
 #define MARIO2_JUGADOR_H
 #include "Entidad.h"
 
-
 class Jugador : public Entidad {
 public:
-    Jugador(int x, int y);
-    ~Jugador();
 
-    void moverse(std::string direccion) override;
 };
-
-#endif
-
+#endif //MARIO2_JUGADOR_H

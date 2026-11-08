@@ -3,26 +3,20 @@
 //
 
 #include "Entidad.h"
-#include "Mapa.h"
+Entidad::Entidad(Sprite s) :sprite(s)
+{
+}
 
-Entidad::Entidad(std::string nombre, int alto, int ancho, int vida)
-        : Sprite(nombre, alto, ancho), vida(vida) {
+Entidad::~Entidad()
+{
+}
 
-        }
-
-Entidad::~Entidad() {}
-
-void Entidad::dibujar(Mapa& map) {
+void Entidad::dibujar(Mapa& map) 
+{
     
 }
 
-void Entidad::borrar(Mapa& map) {
+void Entidad::borrar(Mapa& map) 
+{
     
 }
-
-Posicion Entidad::operator+(const Posicion& other) const {
-    return {get_pos_x() + other.x, get_pos_y() + other.y};
-}
-
-int Entidad::getVida() const { return vida; }
-void Entidad::setVida(int vida) { this->vida = vida; }
