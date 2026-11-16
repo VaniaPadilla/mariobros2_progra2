@@ -7,6 +7,8 @@
 
 
 class Juego {
+    private:
+    public:
 };
 
 
