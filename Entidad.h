@@ -6,19 +6,19 @@
 #define MARIO2_ENTIDAD_H
 #include "Sprite.h"
 
-class Entidad
-{
-    private:
-    bool vida;
-    Sprite sprite;
-    public:
-    
-    Entidad(bool _vida, Sprite _s);
-    ~Entidad();
+class Entidad: public Sprite {
+private:
+    bool vida = true;
+
+public:
+    Entidad(std::string nombre, int alto, int ancho, MUNDO matriz);
+    virtual ~Entidad();
 
     virtual void moverse(std::string direccion) = 0;
-    void dibujar(Mapa& mapa);
-    void borrar(Mapa& mapa);
+
+    bool is_vida() const;
+
+    void set_vida(bool vida);
 };
 
 #endif //MARIO2_ENTIDAD

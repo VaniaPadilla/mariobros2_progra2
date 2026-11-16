@@ -7,34 +7,36 @@
 
 #include <iostream>
 #include <vector>
-
 #include "Mapa.h"
+
+using MUNDO = std::vector<std::vector<int>>;
 
 class Sprite {
 private:
     std::string nombre;
-    std::vector<std::vector<int>> matriz;
+    MUNDO matriz;
     int alto, ancho;
     int posX, posY;
 
 public:
 
-    Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz);
-    ~Sprite();
+    Sprite (std::string nombre, int alto, int ancho, MUNDO matriz);
 
-    static void dibujar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY);
+    virtual ~Sprite();
 
-    static void borrar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY);
+    static void dibujar(MUNDO& mundito, const Sprite& spritito, int posX, int posY);
 
-    void modificar(std::vector<std::vector<int>> nuevaMat);
+    static void borrar(MUNDO& mundito, const Sprite& spritito, int posX, int posY);
+
+    void modificar(MUNDO& nuevaMat);
 
     static Sprite clonar(Sprite spritito);
 
     std::string get_nombre() const;
     void set_nombre(std::string nombre);
 
-    std::vector<std::vector<int>> get_matriz() const;
-    void set_matriz(std::vector<std::vector<int>> matriz);
+    const MUNDO& get_matriz() const;
+    void set_matriz(MUNDO matriz);
 
     int get_alto() const;
     void set_alto(int alto);
