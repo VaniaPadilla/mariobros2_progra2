@@ -20,7 +20,7 @@ private:
 
     int filsVentana, colsVentana;
     int colInicialVentana;
-    std::vector<std::vector<int>> ventana;
+    MUNDO ventana;
 
     std::vector<Entidad*> entidades;
     Jugador jugadorcito;
