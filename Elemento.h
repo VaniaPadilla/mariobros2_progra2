@@ -6,15 +6,21 @@
 #define MARIO2_ELEMENTO_H
 #include "Sprite.h"
 
-
 class Elemento : public Sprite {
+
 private:
     bool atravesable;
-    int estado;
+    char estado;
 
 public:
-    Elemento(std::string nombre, int alto, int ancho, bool atravesable, int estado);
-    ~Elemento();
+    Elemento(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, bool atravesable, char estado);
+    virtual ~Elemento();
+
+    bool getAtravesable() const;
+    void setAtravesable(bool atravesable);
+
+    char getEstado() const;
+    void setEstado(char estado);
 
 };
 

@@ -3,3 +3,17 @@
 //
 
 #include "Juego.h"
+
+
+
+
+
+
+
+
+
+
+
+int Jugador::get_coins() const {
+    return coins;
+}

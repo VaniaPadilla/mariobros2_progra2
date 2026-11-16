@@ -4,10 +4,21 @@
 
 #ifndef MARIO2_ENTIDAD_H
 #define MARIO2_ENTIDAD_H
+#include "Sprite.h"
 
+class Entidad: public Sprite {
+private:
+    bool vida = true;
 
-class Entidad {
+public:
+    Entidad(std::string nombre, int alto, int ancho, MUNDO matriz);
+    virtual ~Entidad();
+
+    virtual void moverse(std::string direccion) = 0;
+
+    bool is_vida() const;
+
+    void set_vida(bool vida);
 };
 
-
-#endif //MARIO2_ENTIDAD_H
+#endif //MARIO2_ENTIDAD
