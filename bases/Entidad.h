@@ -10,7 +10,7 @@ private:
     bool vida = true;
 
 public:
-    Entidad(std::string nombre, int alto, int ancho, MUNDO matriz);
+    Entidad(std::string nombre, int alto, int ancho, MUNDO matriz, int posX, int posY);
     virtual ~Entidad();
 
     virtual void moverse(std::string direccion) = 0;

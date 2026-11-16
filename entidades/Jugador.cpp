@@ -1,7 +1,7 @@
 
 #include "Jugador.h"
 
-Jugador::Jugador(std::string nombre, int alto, int ancho, MUNDO matriz) : Entidad(nombre, alto, ancho, matriz) {
+Jugador::Jugador(std::string nombre, int alto, int ancho, MUNDO matriz) : Entidad(nombre, alto, ancho, matriz, 7, 104) {
 
 }
 

@@ -17,7 +17,7 @@ private:
 
 public:
 
-    Sprite (std::string nombre, int alto, int ancho, MUNDO matriz);
+    Sprite (std::string nombre, int alto, int ancho, MUNDO matriz, int posX, int posY);
     virtual ~Sprite();
 
     //

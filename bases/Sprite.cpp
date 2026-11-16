@@ -2,13 +2,13 @@
 #include "Sprite.h"
 #include "Mapa.h"
 
-Sprite::Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz) {
+Sprite::Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, int posX, int posY) {
     this->nombre = nombre;
     this->alto = alto;
     this->ancho = ancho;
     this->matriz = matriz;
-    posX = 0;
-    posY = 0;
+    this->posX = posX;
+    this->posY = posY;
 }
 
 Sprite::~Sprite() {

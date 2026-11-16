@@ -2,8 +2,8 @@
 
 #include "NpcEnemigo.h"
 
-NpcEnemigo::NpcEnemigo(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz)
-    : Entidad(nombre, alto, ancho, matriz) {
+NpcEnemigo::NpcEnemigo(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, int posX, int posY)
+    : Entidad(nombre, alto, ancho, matriz, posX, posY) {
 }
 
 NpcEnemigo::~NpcEnemigo() {
