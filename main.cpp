@@ -1,11 +1,13 @@
 
-
-
 #include <iostream>
 
+#include "Juego.h"
 
 int main() {
-    std::cout << "Hi \n";
+
+    Juego *superMarioBros = new Juego();
+
+    superMarioBros->iniciar();
 
     return 0;
 }

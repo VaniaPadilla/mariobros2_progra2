@@ -9,7 +9,7 @@ Mapa::Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugad
     this->colInicialVentana = 0;
     this->jugadorcito = jugador;
     crearMundo();
-} ;
+}
 
 Mapa::~Mapa() {
 }
@@ -78,7 +78,7 @@ void Mapa::dibujarEscena() const {
 }
 
 
-
+// Getters & Setters
 
 int Mapa::get_fils_mundo() const {
     return filsMundo; }
