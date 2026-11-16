@@ -1,9 +1,5 @@
-//
-// Created by User01 on 6/11/2026.
-//
 
 #include "Sprite.h"
-
 #include "Mapa.h"
 
 Sprite::Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz) {
@@ -18,6 +14,7 @@ Sprite::Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector
 Sprite::~Sprite() {
 }
 
+// Métodos
 
 void Sprite::dibujar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY) {
     for (int i=0; i <= spritito.alto; i++) {
@@ -54,13 +51,14 @@ Sprite Sprite::clonar(Sprite spritito) {
     return {spritito.nombre, spritito.alto, spritito.ancho, spritito.matriz};
 }
 
+// Getters & Setters
 
 std::string Sprite::get_nombre() const {
     return nombre; }
 void Sprite::set_nombre(std::string nombre) {
     this->nombre = nombre; }
 
-std::vector<std::vector<int>> Sprite::get_matriz() const {
+const MUNDO &Sprite::get_matriz() const {
     return matriz; }
 void Sprite::set_matriz(std::vector<std::vector<int>> matriz) {
     this->matriz = matriz; }
