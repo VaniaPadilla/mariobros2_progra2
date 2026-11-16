@@ -15,7 +15,7 @@
 class Mapa {
 private:
     int filsMundo, colsMundo;
-    std::vector<std::vector<int>> mundo;
+    MUNDO mundo;
     std::vector<std::vector<char>> mundoCod;
 
     int filsVentana, colsVentana;
@@ -24,8 +24,6 @@ private:
 
     std::vector<Entidad*> entidades;
     Jugador jugadorcito;
-
-    int coins;
 
 public:
     Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador jugadorcito);
@@ -49,8 +47,8 @@ public:
     int get_cols_mundo() const;
     void set_cols_mundo(int cols_mundo);
 
-    std::vector<std::vector<int>> get_mundo() const;
-    void set_mundo(std::vector<std::vector<int>> mundo);
+    MUNDO get_mundo() const;
+    void set_mundo(MUNDO mundo);
 
     std::vector<std::vector<char>> get_mundo_cod() const;
     void set_mundo_cod(std::vector<std::vector<char>> mundo_cod);
@@ -61,8 +59,8 @@ public:
     int get_cols_ventana() const;
     void set_cols_ventana(int cols_ventana);
 
-    std::vector<std::vector<int>> get_ventana() const;
-    void set_ventana(std::vector<std::vector<int>> ventana);
+    MUNDO get_ventana() const;
+    void set_ventana(MUNDO ventana);
 };
 
 

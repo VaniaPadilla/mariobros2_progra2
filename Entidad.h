@@ -11,7 +11,7 @@ private:
     bool vida = true;
 
 public:
-    Entidad(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz);
+    Entidad(std::string nombre, int alto, int ancho, MUNDO matriz);
     virtual ~Entidad();
 
     virtual void moverse(std::string direccion) = 0;

@@ -10,10 +10,10 @@
 class NpcEnemigo : public Entidad 
 {
     public:
-    NpcEnemigo(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz);
+    NpcEnemigo(std::string nombre, int alto, int ancho, MUNDO matriz);
     virtual ~NpcEnemigo();
 
-    void moverse(std::vector<std::vector<int>>& mundo, int& posX, int& posY, std::string direccion) override;
+    void moverse(std::string direccion) override;
 
 };
 

@@ -6,8 +6,6 @@
 #define MARIO2_ELEMENTO_H
 #include "Sprite.h"
 
-
-class Mapa;
 class Elemento : public Sprite {
 
 private:
@@ -16,7 +14,7 @@ private:
 
 public:
     Elemento(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, bool atravesable, char estado);
-    ~Elemento();
+    virtual ~Elemento();
 
     bool getAtravesable() const;
     void setAtravesable(bool atravesable);
