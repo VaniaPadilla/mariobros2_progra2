@@ -37,8 +37,8 @@ void Mapa::agregarElemento(Elemento elementito) {
     }
 }
 
-void Mapa::agregarEntidad(Entidad* enti) {
-    entidades.push_back(enti);
+void Mapa::operator+=(Entidad* entidad) {
+    entidades.push_back(entidad);
 }
 
 void Mapa::moverEscena() {
@@ -75,9 +75,9 @@ void Mapa::dibujarEscena() const {
         lienzo += "\n";
     }
 
-    std::cout << "lienzo";
+    std::cout << lienzo;
 
-    std::cout << "\ncoins: " << coins << "\n\n";
+    std::cout << "\ncoins: " << jugadorcito.get_coins() << "\n\n";
 }
 
 

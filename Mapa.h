@@ -33,7 +33,7 @@ public:
 
     void agregarElemento(Elemento elementito);
 
-    void agregarEntidad(Entidad* entidad);
+    void operator+=(Entidad* entidad);
 
     void moverEscena();
 
