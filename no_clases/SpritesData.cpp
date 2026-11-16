@@ -23,3 +23,4 @@ MUNDO matrizArbusto() {
 MUNDO matrizTuberia() {
     return MUNDO(1, std::vector<int>(1, C_VERDE));
 }
+

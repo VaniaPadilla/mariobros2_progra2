@@ -1,16 +1,13 @@
-//
-// Created by User01 on 6/11/2026.
-//
 
 #ifndef MARIO2_MAPA_H
 #define MARIO2_MAPA_H
 
 #include <vector>
 
-#include "colores.h"
-#include "Elemento.h"
-#include "Entidad.h"
-#include "Jugador.h"
+#include "no_clases/colores.h"
+#include "bases/Elemento.h"
+#include "bases/Entidad.h"
+#include "entidades/Jugador.h"
 
 class Mapa {
 private:

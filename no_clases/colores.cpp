@@ -1,8 +1,7 @@
-//
-// Created by User01 on 8/11/2026.
-//
 
-#include "colores.h"
+
+#include "../no_clases/colores.h"
+
 
 // Recibe un número entero y retorna un string con el código ANSI correspondiente
 std::string colorANSI(const int color)

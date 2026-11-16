@@ -1,8 +1,5 @@
-//
-// Created by User01 on 6/11/2026.
-//
 
-#include "Elemento.h"s
+#include "Elemento.h"
 #include "Mapa.h"
 
 Elemento::Elemento(std::string nombre, int alto, int ancho, MUNDO matriz, bool atravesable, char estado)

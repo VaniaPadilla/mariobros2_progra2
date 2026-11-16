@@ -1,13 +1,12 @@
-//
-// Created by User01 on 6/11/2026.
-//
 
 #ifndef MARIO2_ENTIDAD_H
 #define MARIO2_ENTIDAD_H
+
 #include "Sprite.h"
 
 class Entidad: public Sprite {
 private:
+    // Determina si una entidad esta viva o muerta
     bool vida = true;
 
 public:
