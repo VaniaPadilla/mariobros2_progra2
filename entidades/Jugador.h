@@ -14,12 +14,15 @@ public:
     Jugador(std::string nombre, int alto, int ancho, MUNDO matriz);
     virtual ~Jugador();
 
-    // direccion: "right", "left", "top", "up-right", "up-left"
+    // Direccion: "right", "left", "top", "up-right", "up-left"
     void moverse(std::string direccion) override;
+
+    void sumarMoneda();
+
+    // Getters & Setters
 
     int get_coins() const;
     void set_coins(int coins);
-    void sumarMoneda();
 
     bool is_aire() const;
     void set_aire(bool aire);

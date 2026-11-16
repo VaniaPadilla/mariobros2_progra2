@@ -4,10 +4,10 @@
 
 #include <vector>
 
-#include "no_clases/colores.h"
-#include "bases/Elemento.h"
-#include "bases/Entidad.h"
-#include "entidades/Jugador.h"
+#include "colores.h"
+#include "Elemento.h"
+#include "Entidad.h"
+#include "Jugador.h"
 
 class Mapa {
 private:
@@ -26,6 +26,8 @@ public:
     Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador jugadorcito);
     ~Mapa();
 
+    // Métodos
+
     void crearMundo();
 
     void agregarElemento(Elemento elementito);
@@ -36,7 +38,7 @@ public:
 
     void dibujarEscena() const;
 
-
+    // Getters & Setters
 
     int get_fils_mundo() const;
     void set_fils_mundo(int fils_mundo);
