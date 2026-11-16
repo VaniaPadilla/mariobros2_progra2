@@ -1,6 +1,3 @@
-//
-// Created by User01 on 6/11/2026.
-//
 
 #ifndef MARIO2_SPRITE_H
 #define MARIO2_SPRITE_H
@@ -21,16 +18,18 @@ private:
 public:
 
     Sprite (std::string nombre, int alto, int ancho, MUNDO matriz);
-
     virtual ~Sprite();
 
-    static void dibujar(MUNDO& mundito, const Sprite& spritito, int posX, int posY);
+    //
 
+    static void dibujar(MUNDO& mundito, const Sprite& spritito, int posX, int posY);
     static void borrar(MUNDO& mundito, const Sprite& spritito, int posX, int posY);
 
     void modificar(MUNDO& nuevaMat);
 
     static Sprite clonar(Sprite spritito);
+
+    // Getters & Setters
 
     std::string get_nombre() const;
     void set_nombre(std::string nombre);
