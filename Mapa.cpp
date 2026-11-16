@@ -93,9 +93,9 @@ int Mapa::get_cols_mundo() const {
 void Mapa::set_cols_mundo(int cols_mundo) {
     colsMundo = cols_mundo; }
 
-std::vector<std::vector<int>> Mapa::get_mundo() const {
+MUNDO Mapa::get_mundo() const {
     return mundo; }
-void Mapa::set_mundo(std::vector<std::vector<int>> mundo) {
+void Mapa::set_mundo(MUNDO mundo) {
     this->mundo = mundo; }
 
 std::vector<std::vector<char>> Mapa::get_mundo_cod() const {
@@ -113,7 +113,7 @@ int Mapa::get_cols_ventana() const {
 void Mapa::set_cols_ventana(int cols_ventana) {
     colsVentana = cols_ventana; }
 
-std::vector<std::vector<int>> Mapa::get_ventana() const {
+MUNDO Mapa::get_ventana() const {
     return ventana; }
-void Mapa::set_ventana(std::vector<std::vector<int>> ventana) {
+void Mapa::set_ventana(MUNDO ventana) {
     this->ventana = ventana; }

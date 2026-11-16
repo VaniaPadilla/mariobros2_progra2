@@ -2,10 +2,10 @@
 // Created by User01 on 6/11/2026.
 //
 
-#include "Elemento.h"
+#include "Elemento.h"s
 #include "Mapa.h"
 
-Elemento::Elemento(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, bool atravesable, char estado)
+Elemento::Elemento(std::string nombre, int alto, int ancho, MUNDO matriz, bool atravesable, char estado)
     : Sprite(nombre, alto, ancho, matriz){
     this->atravesable = atravesable;
     this->estado = estado;

@@ -13,7 +13,7 @@ private:
     char estado;
 
 public:
-    Elemento(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, bool atravesable, char estado);
+    Elemento(std::string nombre, int alto, int ancho, MUNDO matriz, bool atravesable, char estado);
     virtual ~Elemento();
 
     bool getAtravesable() const;
