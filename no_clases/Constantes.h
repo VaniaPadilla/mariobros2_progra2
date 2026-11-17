@@ -21,7 +21,8 @@ const int PASO_HORIZ = 12;   // right / left
 const int PASO_VERT = 16;    // up
 
 // Distancia de Mario al borde de la ventana antes de mover la camara
-const int DIST_CAMARA = 42;
+const int DIST_CAMARA_DER = 42;
+const int DIST_CAMARA_IZQ = 32;
 
 // Fila donde empieza el piso de ladrillo
 const int FILA_PISO = 43;
