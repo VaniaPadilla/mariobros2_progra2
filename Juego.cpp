@@ -630,13 +630,20 @@ void Juego::revisarChoqueGoombas(bool aterrizando, int filaAerea) {
 
 
 void Juego::guardar() {
-    std::cout << "Quiero al profesor Wilder\n";
+
+    if (Guardado::guardar(*this, "partida.txt")) {
+        std::cout << "Partida guardada\n";}
+    else {
+        std::cout << "No se pudo guardar la partida\n";}
 }
 
 void Juego::cargar() {
-    std::cout << "Quiero al profesor Wilder x2\n";
-}
 
+    if (Guardado::cargar(*this, "partida.txt")) {
+        std::cout << "Partida cargada\n";}
+    else {
+        std::cout << "No existe una partida valida para cargar\n";}
+}
 
 //--------------------------------------------
 // Constructor y destructor
