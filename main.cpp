@@ -10,6 +10,9 @@ int main() {
     std::cout << "Iniciar Juego\n";
     superMarioBros->iniciar();
 
+    delete superMarioBros;
+  
     std::cout << "Crash\n";
+  
     return 0;
 }

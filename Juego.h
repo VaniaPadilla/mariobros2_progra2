@@ -19,7 +19,6 @@ private:
     std::vector<Entidad*> entidades;   // enemigos creados con new
     bool iniciado;                     // ya se escribio init
     bool terminado;                    // Mario toco al goomba o se salio del programa
-
 public:
     Juego();
     ~Juego();
@@ -53,6 +52,9 @@ public:
 
     bool is_terminado() const;
     void set_terminado(bool terminado);
+
+    void moverEnemigos();              // Mueve los dos Goombas una vez por turno.
+    void animarSalto();                // NUEVO: dibuja los dos fotogramas del salto.
 };
 
 #endif //MARIO2_JUEGO_H
