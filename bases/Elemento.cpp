@@ -2,8 +2,8 @@
 #include "Elemento.h"
 #include "Mapa.h"
 
-Elemento::Elemento(std::string nombre, int alto, int ancho, MUNDO matriz, bool atravesable, char estado)
-    : Sprite(nombre, alto, ancho, matriz){
+Elemento::Elemento(std::string nombre, int alto, int ancho, MUNDO matriz, int posX, int posY, bool atravesable, char estado)
+    : Sprite(nombre, alto, ancho, matriz, posX, posY){
     this->atravesable = atravesable;
     this->estado = estado;
 }

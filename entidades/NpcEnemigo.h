@@ -8,7 +8,7 @@
 class NpcEnemigo : public Entidad 
 {
     public:
-    NpcEnemigo(std::string nombre, int alto, int ancho, MUNDO matriz);
+    NpcEnemigo(std::string nombre, int alto, int ancho, MUNDO matriz, int posX, int posY);
     virtual ~NpcEnemigo();
 
     void moverse(std::string direccion) override;

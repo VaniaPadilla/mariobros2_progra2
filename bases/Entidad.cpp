@@ -1,8 +1,8 @@
 
 #include "Entidad.h"
 
-Entidad::Entidad(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz)
-    : Sprite(nombre, alto, ancho, matriz){
+Entidad::Entidad(std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, int posX, int posY)
+    : Sprite(nombre, alto, ancho, matriz, posX, posY) {
     this->vida = true;
 }
 
