@@ -1,6 +1,5 @@
 
 #include "Juego.h"
-
 #include <chrono>
 #include <thread>
 
@@ -62,7 +61,7 @@ void Juego::crearElementos() {
     (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 213, false, '0');
     (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 232, false, '0');
 
-    (*mapa) += Elemento("Tuberia", ALTO_TUBERIA, ANCHO_TUBERIA, tuberiaS, 25, 141, false, '0');
+    (*mapa) += Elemento("Tuberia", ALTO_TUBERIA, ANCHO_TUBERIA, tuberiaS, FILA_TUBERIA, COL_TUBERIA, false, '0');
 
 }
 
@@ -127,17 +126,34 @@ void Juego::ejecutar() {
             break;
         }
 
+        bool saltoTuberia = CercaTUBERIA(eleccion); //Ver si activa el supersalto
         // Procesar el comando de Mario.
         bool valido = procesarComando(eleccion);
 
         if (!valido) {
+            if (eleccion == "right" || eleccion == "left" ||
+            eleccion == "top" || eleccion == "up" ||
+            eleccion == "up-right" || eleccion == "up-left") {
+            std::cout << "Esta seccion es inaccesible\n";
+            } //Son las 2:13 de la mañana e hice esto, por pura estetica p~p
+            else {
             std::cout << "invalid operation\n";
+            }
         }
 
         // Ambos Goombas se mueven una vez por comando,
         // incluso cuando la instruccion es invalida. Decisión estilistica
         moverEnemigos();
 
+        if (valido && saltoTuberia) {
+            mapa->moverEscena();
+            mapa->dibujarEscena();
+            continue;
+        }
+
+        if (valido && (eleccion == "right" || eleccion == "left")) {
+            revisarApoyoTuberia();}
+        
         if (valido && Jugador::esSalto(eleccion)) {
 
             // En caso que salto, ejecutar animación como en el proyecto 1
@@ -195,8 +211,149 @@ void Juego::animarSalto() {
     mapa->dibujarEscena();
 }
 
+bool Juego::CercaTUBERIA(const std::string& eleccion) {
+
+    // Solo aceptar saltos diagonales desde el suelo.
+    if (jugador->is_aire() || jugador->get_pos_x() != FILA_PISO - jugador->get_alto()) {
+        return false;}
+
+    int columna = jugador->get_pos_y();
+
+    int bordeMario = columna + jugador->get_ancho();
+    int bordeTuberia = COL_TUBERIA + ANCHO_TUBERIA;
+
+    // Subir desde el lado izquierdo.
+    if (eleccion == "up-right") {
+
+        if (bordeMario <= COL_TUBERIA && COL_TUBERIA - bordeMario <= PASO_HORIZ) {
+            return true;}
+    }
+
+    // Subir desde el lado derecho.
+    else if (eleccion == "up-left") {
+
+        if (columna >= bordeTuberia && columna - bordeTuberia <= PASO_HORIZ) {
+            return true;}
+    }
+
+    return false;
+}
+
+void Juego::reposicionar(const std::string& eleccion) {
+
+    if (!CercaTUBERIA(eleccion)) {
+        return;
+    }
+
+    // La parte inferior de Mario queda apoyada
+    // exactamente en la parte superior de la tuberia.
+    jugador->set_pos_x(FILA_TUBERIA - jugador->get_alto());
+
+    if (eleccion == "up-right") {
+
+        jugador->set_pos_y(COL_TUBERIA);
+    }
+    else if (eleccion == "up-left") {
+
+        jugador->set_pos_y(
+            COL_TUBERIA + ANCHO_TUBERIA
+            - jugador->get_ancho()
+        );
+    }
+
+    // Actualizar la altura de aterrizaje de Mario.
+    jugador->set_aire(false);
+}
+
+bool Juego::chocaTuberia(int fila, int columna) const {
+
+    // Comprobar superposicion de dos rectangulos
+    return fila < FILA_TUBERIA + ALTO_TUBERIA &&
+           fila + jugador->get_alto() > FILA_TUBERIA &&
+           columna < COL_TUBERIA + ANCHO_TUBERIA &&
+           columna + jugador->get_ancho() > COL_TUBERIA;
+}
+
+void Juego::revisarApoyoTuberia() {
+
+    int filaSuperior =
+        FILA_TUBERIA - jugador->get_alto();
+
+    // Solo comprobar cuando Mario esta encima.
+    if (jugador->get_pos_x() != filaSuperior) {
+        return;
+    }
+
+    int bordeIzquierdo = jugador->get_pos_y();
+    int bordeDerecho = bordeIzquierdo + jugador->get_ancho();
+
+    int bordeDerechoTuberia =
+        COL_TUBERIA + ANCHO_TUBERIA;
+
+    // Si Mario abandona la superficie, cae al suelo.
+    if (bordeDerecho <= COL_TUBERIA ||
+        bordeIzquierdo >= bordeDerechoTuberia) {
+
+        jugador->set_pos_x(
+            FILA_PISO - jugador->get_alto()
+        );
+
+        jugador->set_aire(false); //Con esto logramos que mario no vuele
+    }
+}
+
+bool Juego::Supervisor(const std::string &comando)
+{
+    // Impedir atravesar la tuberia con movimientos horizontales o diagonales.
+    if (comando == "right" || comando == "up-right" || comando == "left" || comando == "up-left") {
+
+        int filaActual = jugador->get_pos_x();
+        int columnaNueva = jugador->get_pos_y();
+
+        if (comando == "right" || comando == "up-right") {
+            columnaNueva += PASO_HORIZ;
+        }
+        else {
+            columnaNueva -= PASO_HORIZ;
+        }
+        // Comprobar el recorrido horizontal.
+        if (chocaTuberia(filaActual, columnaNueva)) {
+            return false;
+        }
+
+        // Comprobar tambien la posicion elevada.
+        if (comando == "up-right" || comando == "up-left") 
+        {
+            if (filaActual - PASO_VERT < 0) {
+                return false;
+            }
+            if (chocaTuberia(filaActual - PASO_VERT, columnaNueva)) {
+                return false;
+            }
+        }
+    }
+    // No saltar fuera del mapani atravesar la tuberia verticalmente.
+    if (comando == "top" || comando == "up") {
+
+        int filaNueva = jugador->get_pos_x() - PASO_VERT;
+
+        if (filaNueva < 0 || chocaTuberia(filaNueva, jugador->get_pos_y())) {
+            return false;
+        }
+    }
+    // Si ninguna comprobacion rechazo el comando, el Supervisor permite continuar.
+    return true;
+}
+
 bool Juego::procesarComando(const std::string &comando) {
 
+    if (CercaTUBERIA(comando)) {
+    reposicionar(comando);
+    return true;}
+    if(!Supervisor(comando))
+    {
+        return false;
+    }
     //Confunde que este inverso, pero: 
     const int columna = jugador->get_pos_y(); // posY representa la columna horizontal.
     if (comando == "right" || comando == "up-right") {
