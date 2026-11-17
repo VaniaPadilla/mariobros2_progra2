@@ -144,7 +144,9 @@ bool Guardado::cargar(Juego& juego, const std::string& archivo) {
                 return false;
             }
 
-            if (cod[i][j] != '0' && cod[i][j] != '1') {
+            if (cod[i][j] != '0' && cod[i][j] != '1' &&
+                cod[i][j] != '*' && cod[i][j] != '#' &&
+                cod[i][j] != 'a' && cod[i][j] != 'b') {
                 return false;
             }
         }

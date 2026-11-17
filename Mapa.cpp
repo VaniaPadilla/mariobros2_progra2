@@ -1,5 +1,6 @@
 
 #include "Mapa.h"
+#include <random>
 
 Mapa::Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador& jugadorcito) : jugadorcito(jugadorcito) {
     this->filsMundo = filsMundo;
@@ -22,7 +23,7 @@ Mapa::~Mapa() {
 void Mapa::crearMundo() {
     for (int i = 0; i < filsMundo; i++) {
         for (int j = 0; j < colsMundo; j++) {
-            if (i>=43 && (j<=165 || j>=181)) {
+            if (i>=FILA_PISO && (j< INICIO_HUECO || j>=FIN_HUECO)) {
                 mundo[i][j] = 1;
                 mundoCod[i][j] = '1';
             }
@@ -46,7 +47,115 @@ void Mapa::agregarElemento(Elemento elementito) {
             if (mundoMat[i][j] == TRANSPARENTE) continue;
 
             mundo[fil][col] = mundoMat[i][j];
-            mundoCod[fil][col] = elementito.getAtravesable() ? '0' : '1';
+            if (elementito.get_nombre() == "Signo") {
+                mundoCod[fil][col] = '*';}
+            else if (elementito.get_nombre() == "Ladrillo") {
+                mundoCod[fil][col] = '#';}
+            else {
+                mundoCod[fil][col] = elementito.getAtravesable() ? '0' : '1';}
+        }
+    }
+}
+
+
+char Mapa::golpearBloque(int filaMario, int columnaMario,
+                        int anchoMario, int& columnaBloque,
+                        int& monedas) {
+
+    monedas = 0;
+    columnaBloque = -1;
+
+    // La cabeza debe alcanzar la ultima fila del bloque.
+    if (filaMario > 15 || filaMario + PASO_VERT <= 15)
+        return '0';
+
+    // Revisar las columnas que ocupa la cabeza de Mario.
+    for (int j = columnaMario; j < columnaMario + anchoMario; j++) {
+
+        if (j < 0 || j >= COLS_MUNDO) continue;
+
+        char tipo = mundoCod[15][j];
+
+        // Bloques disponibles: ladrillo o caja con monedas.
+        if (tipo != '#' && tipo != '*' &&
+            tipo != 'a' && tipo != 'b') continue;
+
+        // Encontrar el comienzo del bloque.
+        int inicio = j;
+
+        while (inicio > 0 && mundoCod[15][inicio - 1] == tipo)
+            inicio--;
+
+        // Contar cuantos pixeles horizontales de ese bloque toca Mario.
+        int toques = 0;
+
+        for (int k = 0; k < 9; k++) {
+            if (inicio + k >= columnaMario &&
+                inicio + k < columnaMario + anchoMario)
+                toques++;
+        }
+
+        if (toques < 5) continue;
+
+        columnaBloque = inicio;
+
+        // LADRILLO: dibujar una grieta diagonal.
+        if (tipo == '#') {
+
+            for (int k = 0; k < 9; k++) {
+                mundo[7 + k][inicio + k] = C_NEGRO;
+            }
+
+            return '#';
+        }
+
+        // LUCKY BOX: cuantas monedas quedan disponibles.
+        int restantes = 3;
+
+        if (tipo == 'a') restantes = 2;
+        if (tipo == 'b') restantes = 1;
+
+        // Sorteo entre 0 y las monedas restantes.
+        static std::mt19937 generador(std::random_device{}());
+        std::uniform_int_distribution<int> sorteo(0, restantes);
+
+        monedas = sorteo(generador);
+        restantes -= monedas;
+
+        // Actualizar el estado de la caja.
+        char nuevoEstado = '*';
+
+        if (restantes == 2) nuevoEstado = 'a';
+        if (restantes == 1) nuevoEstado = 'b';
+        if (restantes == 0) nuevoEstado = '1';
+
+        for (int i = 7; i < 16; i++) {
+            for (int k = inicio; k < inicio + 9; k++) {
+
+                mundoCod[i][k] = nuevoEstado;
+
+                // Solo queda negra cuando se agota.
+                if (restantes == 0)
+                    mundo[i][k] = C_NEGRO;
+            }
+        }
+
+        return '*';
+    }
+
+    return '0';
+}
+
+void Mapa::terminarGolpe(char tipo, int columnaBloque) {
+
+    // Solo desaparecen los ladrillos.
+    if (tipo != '#') return;
+
+    for (int i = 0; i < ALTO_LADRILLO; i++) {
+        for (int j = 0; j < ANCHO_LADRILLO; j++) {
+
+            mundo[7 + i][columnaBloque + j] = C_FONDO;
+            mundoCod[7 + i][columnaBloque + j] = '0';
         }
     }
 }

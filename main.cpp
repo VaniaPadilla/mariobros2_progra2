@@ -11,8 +11,5 @@ int main() {
     superMarioBros->iniciar();
 
     delete superMarioBros;
-  
-    std::cout << "Crash\n";
-  
     return 0;
 }

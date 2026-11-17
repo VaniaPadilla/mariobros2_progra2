@@ -172,8 +172,9 @@ void Juego::ejecutar() {
 
         // Ambos Goombas se mueven una vez por comando,
         // incluso cuando la instruccion es invalida. Decisión estilistica
-        moverEnemigos();
-
+        if (eleccion != "save" && eleccion != "load") {
+            moverEnemigos();}
+            //Excepto si recarga partida, ya que sería incoherente
 
         // Ambos supersaltos llegan directamente a una zona segura.
         if (valido && (saltoTuberia || saltoHueco)) {
@@ -332,15 +333,43 @@ void Juego::animarSalto() {
     // Guardar la fila aerea antes de aterrizar.
     int filaAerea = jugador->get_pos_x();
 
-    // Pausa para visualizar a Mario en el aire.
-    std::this_thread::sleep_for(
-        std::chrono::milliseconds(350)
-    );
+    int columnaBloque = -1;
+    int monedas = 0;
 
+    char tipo = mapa->golpearBloque(
+        filaAerea,
+        jugador->get_pos_y(),
+        jugador->get_ancho(),
+        columnaBloque,
+        monedas
+    ); //Comprobamos al cabezon de mario
+
+    // Pausa para visualizar a Mario en el aire.
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(350));
+
+    //Caja agotada o ladrillo
+    if (tipo != '0') {
+        mapa->dibujarEscena();
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
     // SEGUNDO FOTOGRAMA:
 
     jugador->aterrizar();     // Mario vuelve a su fila inicial. 
+    mapa->terminarGolpe(tipo, columnaBloque); //Desaparecer ladrillo
     //Conservo columna nueva, en caso de salto diagonal
+
+    if (tipo == '*') 
+    {
+        for (int i = 0; i < monedas; i++){
+            jugador->sumarMoneda();}
+
+        std::cout << "Recibiste " << monedas << " monedas\n";
+
+        if (monedas == 3){
+            std::cout << "Tuviste buena suerte\n";}
+    } //Resultado del sorteo de monedas
+
     mapa->moverEscena();
     mapa->dibujarEscena();
     //Muere o matas goomba

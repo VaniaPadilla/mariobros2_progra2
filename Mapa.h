@@ -34,6 +34,10 @@ public:
 
     void agregarElemento(Elemento elementito);
 
+    char golpearBloque(int filaMario, int columnaMario, int anchoMario, int& columnaBloque, int& monedas); //Lucky box y animación
+
+    void terminarGolpe(char tipo, int columnaBloque); 
+
     void operator+=(Entidad* entidad); //Sobrecarga de operador
 
     void operator-=(Entidad* entidad); // Retirar una entidad del dibujo.
