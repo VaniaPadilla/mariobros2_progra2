@@ -1,33 +1,116 @@
 
 #include "Jugador.h"
 
-Jugador::Jugador(std::string nombre, int alto, int ancho, MUNDO matriz) : Entidad(nombre, alto, ancho, matriz, 7, 104) {
-
+Jugador::Jugador(std::string nombre, int alto,
+                 int ancho, MUNDO matriz)
+    : Entidad(nombre, alto, ancho, matriz, 27, 7),
+      coins(0),
+      aire(false),
+      filaSuelo(27) {
 }
 
-Jugador::~Jugador() {}
+Jugador::~Jugador() {
+}
 
-// retorna la posicion actualizada del jugador
+// --------------------------------------------------
+// MOVIMIENTOS
+// --------------------------------------------------
+
 void Jugador::moverse(std::string direccion) {
-    const int xActual = this->get_pos_x();
-    const int yActual = this->get_pos_y();
+
+    if (!is_vida() || aire) {
+        return;
+    }
+
+    const int filaActual = get_pos_x();
+    const int columnaActual = get_pos_y();
 
     if (direccion == "right") {
-        this->set_pos_x(xActual + 12);
+        set_pos_y(columnaActual + PASO_HORIZ);
     }
     else if (direccion == "left") {
-        this->set_pos_x(xActual - 12);
+        set_pos_y(columnaActual - PASO_HORIZ);
     }
-    else if (direccion == "top") {
-        this->set_pos_y(yActual - 16);
+    else if (esSalto(direccion)) {
+
+        filaSuelo = filaActual;
+
+        // Movimiento horizontal inmediato.
+        if (direccion == "up-right") {
+            set_pos_y(columnaActual + PASO_HORIZ);
+        }
+        else if (direccion == "up-left") {
+            set_pos_y(columnaActual - PASO_HORIZ);
+        }
+
+        // Primer fotograma: Mario en el aire.
+        set_pos_x(filaSuelo - PASO_VERT);
         aire = true;
     }
-    else if (direccion == "up-right") {
-        this->set_pos_x(xActual + 12);
-        this->set_pos_y(yActual - 16);
+}
+
+// --------------------------------------------------
+// SEGUNDO FOTOGRAMA: ATERRIZAJE
+// --------------------------------------------------
+
+void Jugador::aterrizar() {
+
+    if (!aire) {
+        return;
     }
-    else if (direccion == "up-left") {
-        this->set_pos_x(xActual - 12);
-        this->set_pos_y(yActual - 16);
+
+    set_pos_x(filaSuelo);
+    aire = false;
+}
+
+// --------------------------------------------------
+// IDENTIFICAR SALTOS
+// --------------------------------------------------
+
+bool Jugador::esSalto(const std::string& direccion) {
+
+    return direccion == "top" ||
+           direccion == "up" ||
+           direccion == "up-right" ||
+           direccion == "up-left";
+}
+
+// --------------------------------------------------
+// MONEDAS
+// --------------------------------------------------
+
+void Jugador::sumarMoneda() {
+    coins++;
+}
+
+int Jugador::get_coins() const {
+    return coins;
+}
+
+void Jugador::set_coins(int coins) {
+
+    if (coins >= 0) {
+        this->coins = coins;
     }
+}
+
+// --------------------------------------------------
+// ESTADO DEL SALTO
+// --------------------------------------------------
+
+bool Jugador::is_aire() const {
+    return aire;
+}
+
+void Jugador::set_aire(bool aire) {
+
+    this->aire = aire;
+
+    if (!aire) {
+        filaSuelo = get_pos_x();
+    }
+}
+
+int Jugador::get_fila_suelo() const {
+    return filaSuelo;
 }

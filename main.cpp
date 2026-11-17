@@ -9,5 +9,6 @@ int main() {
 
     superMarioBros->iniciar();
 
+    delete superMarioBros;
     return 0;
 }
