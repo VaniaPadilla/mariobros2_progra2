@@ -172,8 +172,9 @@ void Juego::ejecutar() {
 
         // Ambos Goombas se mueven una vez por comando,
         // incluso cuando la instruccion es invalida. Decisión estilistica
-        moverEnemigos();
-
+        if (eleccion != "save" && eleccion != "load") {
+            moverEnemigos();}
+            //Excepto si recarga partida, ya que sería incoherente
 
         // Ambos supersaltos llegan directamente a una zona segura.
         if (valido && (saltoTuberia || saltoHueco)) {
@@ -194,10 +195,13 @@ void Juego::ejecutar() {
                 mapa->dibujarEscena();
                 }
             }
-        if (!jugador->is_aire() && centroSobreHueco()) 
+        // Comprobar colisiones ordinarias con los Goombas.
+        if (!terminado) {
+            revisarChoqueGoombas(false, 0);}
+        if (!terminado && !jugador->is_aire() && centroSobreHueco())
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(350));
-            jugador->muerte_dano_caida();
+            jugador->muerte_dano_caida(); // Mario se muere dentro del hueco
             mapa->moverEscena();
             mapa->dibujarEscena();
             std::this_thread::sleep_for(std::chrono::milliseconds(600));
@@ -282,18 +286,35 @@ bool Juego::procesarComando(const std::string &comando) {
 void Juego::moverEnemigos() {
 
     // entidades[0] es Mario.
-    // entidades[1] y entidades[2] son Goombas.
+    // Los demas elementos son enemigos creados con new.
     // Cada enemigo vivo se mueve una sola vez.
 
-    int cantidad = entidades.size(); //POO, permite reutilizar código, por si se desea añadir más goombas
-
-    for (int i = 1; i < cantidad; i++) {
+    for (int i = 1; i < entidades.size(); i++) {
 
         if (entidades[i] != nullptr &&
-            entidades[i]->is_vida()) 
-            {
-            // El Goomba ignora la direccion recibida
-            entidades[i]->moverse("");  // Siempre camina hacia la izquierda.
+            entidades[i]->is_vida()) {
+            // Siempre camina hacia la izquierda.
+            entidades[i]->moverse(""); 
+            // Son tontitos, no piensan
+
+            int columna = entidades[i]->get_pos_y();
+            int ancho = entidades[i]->get_ancho();
+
+            // Apoyo determinado por el centro del Goomba.
+            int centro = columna + ancho / 2;
+
+            bool fueraDelMapa =
+                columna < 0 || columna + ancho > COLS_MUNDO;
+
+            bool sobreHueco =
+                centro >= INICIO_HUECO && centro < FIN_HUECO;
+
+            if (fueraDelMapa || sobreHueco) {
+                eliminarGoomba(i);
+                std::cout << "Un Goomba ha caido o salido del mapa\n";
+                // El vector ahora tiene un elemento menos.
+                i--; //Es como el parcial de progra :o
+            }
         }
     }
 }
@@ -309,17 +330,50 @@ void Juego::animarSalto() {
     mapa->moverEscena(); 
     mapa->dibujarEscena();
 
-    // Pausa para visualizar a Mario en el aire.
-    std::this_thread::sleep_for(
-        std::chrono::milliseconds(350)
-    );
+    // Guardar la fila aerea antes de aterrizar.
+    int filaAerea = jugador->get_pos_x();
 
+    int columnaBloque = -1;
+    int monedas = 0;
+
+    char tipo = mapa->golpearBloque(
+        filaAerea,
+        jugador->get_pos_y(),
+        jugador->get_ancho(),
+        columnaBloque,
+        monedas
+    ); //Comprobamos al cabezon de mario
+
+    // Pausa para visualizar a Mario en el aire.
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(350));
+
+    //Caja agotada o ladrillo
+    if (tipo != '0') {
+        mapa->dibujarEscena();
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
     // SEGUNDO FOTOGRAMA:
 
     jugador->aterrizar();     // Mario vuelve a su fila inicial. 
+    mapa->terminarGolpe(tipo, columnaBloque); //Desaparecer ladrillo
     //Conservo columna nueva, en caso de salto diagonal
+
+    if (tipo == '*') 
+    {
+        for (int i = 0; i < monedas; i++){
+            jugador->sumarMoneda();}
+
+        std::cout << "Recibiste " << monedas << " monedas\n";
+
+        if (monedas == 3){
+            std::cout << "Tuviste buena suerte\n";}
+    } //Resultado del sorteo de monedas
+
     mapa->moverEscena();
     mapa->dibujarEscena();
+    //Muere o matas goomba
+    revisarChoqueGoombas(true, filaAerea);
 }
 
 
@@ -400,7 +454,7 @@ bool Juego::CercaHUECO(const std::string& eleccion) {
         columna >= bordeTuberia - jugador->get_ancho() &&
         columna < bordeTuberia) {
         return true; //forma de irse seguro
-    }
+    } //Decison coherente relacionada a desarrollo de videojuegos
 
     // Desde la orilla derecha hacia el suelo al costado de la tuberia.
     if (eleccion == "up-left" &&
@@ -408,7 +462,7 @@ bool Juego::CercaHUECO(const std::string& eleccion) {
         columna >= FIN_HUECO &&
         columna <= FIN_HUECO + PASO_HORIZ) {
         return true; //forma de regresar seguro
-    }
+    } //Manera de probar el regreso unica forma posible, para poder ayudar a volver
 
     return false;
 }
@@ -518,19 +572,107 @@ bool Juego::Supervisor(const std::string &comando)
 }
 
 
+void Juego::eliminarGoomba(int indice) {
+
+    if (indice <= 0 || indice >= entidades.size()) {
+        return;
+    }
+
+    Entidad* enemigo = entidades[indice];
+
+    (*mapa) -= enemigo; // Primero retirarlo del escenario.
+    //operador sobrecargado
+    entidades.erase(entidades.begin() + indice); // Retirarlo del vector que controla Juego.
+
+    // Liberar la memoria dinamica.
+    delete enemigo;
+}
+
+
+void Juego::revisarChoqueGoombas(bool aterrizando, int filaAerea) {
+
+    if (!jugador->is_vida()) {
+        return;
+    }
+
+    for (int i = 1; i < entidades.size(); i++) {
+
+        Entidad* goomba = entidades[i];
+
+        if (goomba == nullptr || !goomba->is_vida()) {
+            continue;
+        }
+
+        // Bordes horizontales de Mario.
+        int marioIzq = jugador->get_pos_y();
+        int marioDer = marioIzq + jugador->get_ancho();
+
+        // Bordes horizontales del Goomba.
+        int goombaIzq = goomba->get_pos_y();
+        int goombaDer = goombaIzq + goomba->get_ancho();
+
+        // Comprobar superposicion horizontal.
+        bool choqueHorizontal =
+            marioIzq < goombaDer && marioDer > goombaIzq;
+
+        // Comprobar superposicion vertical.
+        bool choqueVertical =
+            jugador->get_pos_x() < goomba->get_pos_x() + goomba->get_alto() &&
+            jugador->get_pos_x() + jugador->get_alto() > goomba->get_pos_x();
+
+        if (!choqueHorizontal || !choqueVertical) {
+            continue;
+        }
+
+        // Aplastamiento: Mario venia desde arriba durante el salto.
+        if (aterrizando &&
+            filaAerea + jugador->get_alto() <= goomba->get_pos_x()) {
+
+            goomba->set_vida(false);
+
+            eliminarGoomba(i);
+
+            jugador->sumarMoneda();
+
+            mapa->dibujarEscena();
+
+            std::cout << "Goomba aplastado! +1 moneda\n";
+
+            i--;
+        }
+        else {
+
+            // Contacto lateral o colision sin aplastamiento.
+            jugador->set_vida(false);
+            terminado = true;
+
+            std::cout << "Game Over: Mario fue golpeado por un Goomba\n";
+            return;
+        }
+    }
+}
+
+
 //--------------------------------------------
 // Métodos para guardar y cargar el juego
 //--------------------------------------------
 
 
 void Juego::guardar() {
-    std::cout << "Quiero al profesor Wilder\n";
+
+    if (Guardado::guardar(*this, "partida.txt")) {
+        std::cout << "Partida guardada\n";}
+    else {
+        std::cout << "No se pudo guardar la partida\n";}
 }
 
 void Juego::cargar() {
-    std::cout << "Quiero al profesor Wilder x2\n";
-}
 
+    if (Guardado::cargar(*this, "partida.txt")) {
+        std::cout << "Partida cargada\n";}
+    else {
+        std::cout << "No existe una partida valida para cargar\n";}
+}
 
 //--------------------------------------------
 // Constructor y destructor

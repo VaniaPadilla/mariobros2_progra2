@@ -13,7 +13,7 @@
 #include "SpritesData.h"
 
 class Juego {
-
+friend class Guardado;
 private:
     Mapa* mapa{};                       // memoria dinamica
     Jugador* jugador{};                 // puntero al mismo Mario de entidades[0]
@@ -52,6 +52,9 @@ public:
     // Movimiento y animaciones
     void moverEnemigos();    // mueve los dos Goombas una vez por turno
     void animarSalto();      // dibuja los dos fotogramas del salto
+    void eliminarGoomba(int indice); // Retirar y liberar un Goomba.
+    // Detectar contacto lateral o aplastamiento.
+    void revisarChoqueGoombas(bool aterrizando, int filaAerea);
 
     // Evitar copias accidentales de los punteros.
     Juego(const Juego&);
