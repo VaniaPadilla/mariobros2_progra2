@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <vector>
-#include "Mapa.h"
 
 using MUNDO = std::vector<std::vector<int>>;
 

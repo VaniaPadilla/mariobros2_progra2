@@ -4,17 +4,15 @@
 Juego::Juego() {
     Jugador* jugador = new Jugador("Mario", ALTO_MARIO, ANCHO_MARIO, marioS );
 
-    std::vector<Entidad*> entidades;
     entidades.push_back(jugador);
 
     Mapa* mapa = new Mapa(FILS_MUNDO, COLS_MUNDO, FILS_VENTANA, COLS_VENTANA, *jugador);
     // memoria dinamica
-
+    std::cout << "antes de crear elementos";
     crearElementos();
 
-    // enemigos creados con new
-    bool iniciado = false;                     // ya se escribio init
-    bool terminado = false;
+    iniciado = false;                     // ya se escribio init
+    terminado = false;
 }
 
 Juego::~Juego() {
@@ -22,21 +20,32 @@ Juego::~Juego() {
 
 void Juego::crearElementos() {
     NpcEnemigo* goomba1 = new NpcEnemigo("Goomba", ALTO_GOOMBA, ANCHO_GOOMBA, goombaS, 27, 104);
-    NpcEnemigo* goomba2 = new NpcEnemigo("Goomba", ALTO_GOOMBA, ANCHO_GOOMBA, goombaS, 200, 104);
+    NpcEnemigo* goomba2 = new NpcEnemigo("Goomba", ALTO_GOOMBA, ANCHO_GOOMBA, goombaS, 27, 219);
     entidades.push_back(goomba1);
     entidades.push_back(goomba2);
 
-    Elemento* arbusto1 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 21, false, 0);
-    Elemento* arbusto2 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 29, false, 0);
-    Elemento* arbusto3 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 37, false, 0);
-    Elemento* arbusto4 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 98, false, 0);
+    Elemento* arbusto1 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 21, false, '0');
+    Elemento* arbusto2 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 29, false, '0');
+    Elemento* arbusto3 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 37, false, '0');
+    Elemento* arbusto4 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 98, false, '0');
 
     Elemento* signo1 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 29, false, '*');
     Elemento* signo2 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 82, false, '*');
     Elemento* signo3 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 100, false, '*');
 
-    Elemento* ladrillo1 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 73, false, '0');
+    Elemento* signo4 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 166, false, '*');
+    Elemento* signo5 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 204, false, '*');
+    Elemento* signo6 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 223, false, '*');
 
+    Elemento* ladrillo1 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 73, false, '0');
+    Elemento* ladrillo2 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 91, false, '0');
+    Elemento* ladrillo3 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 109, false, '0');
+
+    Elemento* ladrillo4 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 195, false, '0');
+    Elemento* ladrillo5 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 213, false, '0');
+    Elemento* ladrillo6 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 232, false, '0');
+
+    Elemento* tuberia = new Elemento("Tuberia", ALTO_TUBERIA, ANCHO_TUBERIA, tuberiaS, 25, 141, false, '0');
 
     mapa->agregarElemento(*arbusto1);
     mapa->agregarElemento(*arbusto2);
@@ -48,7 +57,18 @@ void Juego::crearElementos() {
     mapa->agregarElemento(*signo3);
 
     mapa->agregarElemento(*ladrillo1);
+    mapa->agregarElemento(*ladrillo2);
+    mapa->agregarElemento(*ladrillo3);
 
+    mapa->agregarElemento(*signo4);
+    mapa->agregarElemento(*signo5);
+    mapa->agregarElemento(*signo6);
+
+    mapa->agregarElemento(*ladrillo4);
+    mapa->agregarElemento(*ladrillo5);
+    mapa->agregarElemento(*ladrillo6);
+
+    mapa->agregarElemento(*tuberia);
 }
 
 
@@ -89,6 +109,7 @@ void Juego::ejecutar() {
 
     } while (eleccion != "exit");
 
+    std::cout << "Se salio del juego";
 }
 
 bool Juego::procesarComando(const std::string &comando) {
@@ -114,11 +135,11 @@ bool Juego::procesarComando(const std::string &comando) {
     }
 
     if (comando == "save") {
-        guardar();
+        //guardar();
         return true;
     }
     if (comando == "load") {
-        cargar();
+        //cargar();
         return true;
     }
 

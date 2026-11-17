@@ -1,8 +1,7 @@
 
 #include "Sprite.h"
-#include "Mapa.h"
 
-Sprite::Sprite (std::string nombre, int alto, int ancho, std::vector<std::vector<int>> matriz, int posX, int posY) {
+Sprite::Sprite (std::string nombre, int alto, int ancho, MUNDO matriz, int posX, int posY) {
     this->nombre = nombre;
     this->alto = alto;
     this->ancho = ancho;
@@ -16,7 +15,7 @@ Sprite::~Sprite() {
 
 // Métodos
 
-void Sprite::dibujar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY) {
+void Sprite::dibujar(MUNDO& mundito, const Sprite& spritito, int posX, int posY) {
     for (int i=0; i <= spritito.alto; i++) {
         for (int j=0; j <= spritito.ancho; j++) {
             mundito[posX][posY] = spritito.get_matriz()[i][j];
@@ -24,7 +23,7 @@ void Sprite::dibujar(std::vector<std::vector<int>>& mundito, const Sprite& sprit
     }
 }
 
-void Sprite::borrar(std::vector<std::vector<int>>& mundito, const Sprite& spritito, int posX, int posY) {
+void Sprite::borrar(MUNDO& mundito, const Sprite& spritito, int posX, int posY) {
     for (int i=0; i <= spritito.alto; i++) {
         for (int j=0; j <= spritito.ancho; j++) {
             if (posX >= 43){
@@ -37,7 +36,7 @@ void Sprite::borrar(std::vector<std::vector<int>>& mundito, const Sprite& spriti
 }
 
 
-void Sprite::modificar(std::vector<std::vector<int>>& nuevaMat) {
+void Sprite::modificar(MUNDO& nuevaMat) {
     int fil = nuevaMat.size();
     int col = nuevaMat[0].size();
     for (int i=0; i <= fil; i++) {
@@ -48,7 +47,7 @@ void Sprite::modificar(std::vector<std::vector<int>>& nuevaMat) {
 }
 
 Sprite Sprite::clonar(Sprite spritito) {
-    return {spritito.nombre, spritito.alto, spritito.ancho, spritito.matriz};
+    return {spritito.nombre, spritito.alto, spritito.ancho, spritito.matriz, spritito.posX, spritito.posY};
 }
 
 // Getters & Setters
@@ -60,7 +59,7 @@ void Sprite::set_nombre(std::string nombre) {
 
 const MUNDO &Sprite::get_matriz() const {
     return matriz; }
-void Sprite::set_matriz(std::vector<std::vector<int>> matriz) {
+void Sprite::set_matriz(MUNDO matriz) {
     this->matriz = matriz; }
 
 int Sprite::get_alto() const {

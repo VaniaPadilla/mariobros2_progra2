@@ -8,6 +8,11 @@ Mapa::Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugad
     this->colsVentana = colsVentana;
     this->colInicialVentana = 0;
     this->jugadorcito = jugador;
+
+    mundo.assign(filsMundo, std::vector<int>(colsMundo, 0));
+    mundoCod.assign(filsMundo, std::vector<char>(colsMundo, '0'));
+    ventana.assign(filsVentana, std::vector<int>(colsVentana, 0));
+
     crearMundo();
 }
 
@@ -18,17 +23,27 @@ Mapa::~Mapa() {
 void Mapa::crearMundo() {
     for (int i = 0; i < filsMundo; i++) {
         for (int j = 0; j < colsMundo; j++) {
-            if (i>=43) mundo[i][j] = 1;
-            else mundo[i][j] = 0;
-            mundoCod[i][j] = 0;
+            if (i>=43 && (j<=165 || j>=181)) {
+                mundo[i][j] = 1;
+                mundoCod[i][j] = '1';
+            }
+            else {
+                mundo[i][j] = 0;
+                mundoCod[i][j] = '0';
+            }
         }
     }
 }
 
 void Mapa::agregarElemento(Elemento elementito) {
+    const MUNDO& mundoMat = elementito.get_matriz();
     for (int i = 0; i < elementito.get_ancho(); i++) {
         for (int j = 0; j < elementito.get_alto(); j++) {
-            mundo[i][j] = elementito.get_matriz()[i][j];
+            int fil = elementito.get_pos_x() + i;
+            int col = elementito.get_pos_y() + j;
+
+            if (fil<0 || fil>= filsMundo || col <0 || col >= colsMundo) continue;
+            mundo[fil][col] = mundoMat[i][j];
             mundoCod[i][j] = elementito.getAtravesable();
         }
     }
