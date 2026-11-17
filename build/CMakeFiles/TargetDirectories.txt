@@ -1,0 +1,3 @@
+C:/Users/User01/Documents/utec26_2/progra2/mario2/build/CMakeFiles/mario2.dir
+C:/Users/User01/Documents/utec26_2/progra2/mario2/build/CMakeFiles/edit_cache.dir
+C:/Users/User01/Documents/utec26_2/progra2/mario2/build/CMakeFiles/rebuild_cache.dir
