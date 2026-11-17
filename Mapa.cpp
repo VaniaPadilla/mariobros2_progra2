@@ -55,6 +55,17 @@ void Mapa::operator+=(Entidad* entidad) {
     entidades.push_back(entidad);
 }
 
+void Mapa::operator-=(Entidad* entidad) {
+
+    for (int i = 0; i < entidades.size(); i++) {
+
+        if (entidades[i] == entidad) {
+            entidades.erase(entidades.begin() + i);
+            return;
+        }
+    }
+}
+
 void Mapa::operator+=(Elemento elemento) {
     agregarElemento(elemento);
 }
@@ -105,7 +116,7 @@ void Mapa::dibujarEscena() const {
                     }
                 }
             }
-            lienzo += colorANSI(celda) + " " + colorANSI(9);
+            lienzo += colorANSI(celda) + "  " + colorANSI(9);
         }
         lienzo += "\n";
     }
