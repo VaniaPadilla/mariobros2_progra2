@@ -137,7 +137,9 @@ void Juego::ejecutar() {
             if (eleccion == "right" || eleccion == "left" ||
             eleccion == "top" || eleccion == "up" ||
             eleccion == "up-right" || eleccion == "up-left") {
-            std::cout << "Esta seccion es inaccesible\n";
+            bool saleDelMapa = ((eleccion == "right" || eleccion == "up-right") && jugador->get_pos_y() + PASO_HORIZ + jugador->get_ancho() > COLS_MUNDO) || ((eleccion == "left" || eleccion == "up-left") && jugador->get_pos_y() - PASO_HORIZ < 0);
+            if (saleDelMapa) std::cout << "Esta tratando de salir del mapa\n";
+            else std::cout << "Esta seccion es inaccesible\n";
             } //Son las 2:13 de la mañana e hice esto, por pura estetica p~p
             else {
             std::cout << "invalid operation\n";
@@ -167,6 +169,10 @@ void Juego::ejecutar() {
             }
         if (!jugador->is_aire() && centroSobreHueco()) 
         {
+        if (TENER_QUE_CAERSE) {
+            jugador->set_pos_x(FILS_MUNDO - jugador->get_alto());   // aparece dentro del hueco, abajo
+            mapa->dibujarEscena();
+        }
         jugador->set_vida(false);
         terminado = true;
         std::cout << "Game Over: Mario cayo al vacio\n";

@@ -48,4 +48,7 @@ const int C_AMARILLO_CLARO = 7;
 const int C_MARRON = 8;
 const int C_RESET = 9;
 
+// Si es true, al caer al hueco Mario aparece dentro del hueco antes del game over
+const bool TENER_QUE_CAERSE = true;
+
 #endif //MARIO2_CONSTANTES_H
