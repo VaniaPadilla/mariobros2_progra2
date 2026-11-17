@@ -3,7 +3,7 @@
 
 Jugador::Jugador(std::string nombre, int alto,
                  int ancho, MUNDO matriz)
-    : Entidad(nombre, alto, ancho, matriz, 27, 7),
+    : Entidad(nombre, alto, ancho, matriz, FILA_PISO - alto, 0),
       coins(0),
       aire(false),
       filaSuelo(27) {

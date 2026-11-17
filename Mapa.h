@@ -22,10 +22,10 @@ private:
     MUNDO ventana;
 
     std::vector<Entidad*> entidades;
-    Jugador jugadorcito;
+    Jugador& jugadorcito; //Paso referencial, trabajamos todos con el mismo Mario
 
 public:
-    Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador jugadorcito);
+    Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador& jugadorcito);
     ~Mapa();
 
     // Métodos
@@ -35,6 +35,8 @@ public:
     void agregarElemento(Elemento elementito);
 
     void operator+=(Entidad* entidad);
+
+    void operator+=(Elemento elemento);
 
     void moverEscena();
 
