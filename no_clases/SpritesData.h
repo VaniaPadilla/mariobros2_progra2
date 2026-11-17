@@ -36,6 +36,11 @@ const int ALTO_LADRILLO = 8;
 const int ANCHO_LADRILLO = 9;
 extern const MUNDO ladrilloS;
 
+// Dimensiones del sprite de tuberia
+const int ALTO_TUBERIA = 22;
+const int ANCHO_TUBERIA = 17;
+extern const MUNDO tuberiaS;
+
 // Dimensiones del sprite de mario
 const int ALTO_MARIO = 16;
 const int ANCHO_MARIO = 12;

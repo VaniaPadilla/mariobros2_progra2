@@ -13,9 +13,11 @@ class Mapa {
 private:
     int filsMundo, colsMundo;
     MUNDO mundo;
+
     std::vector<std::vector<char>> mundoCod;
 
     int filsVentana, colsVentana;
+
     int colInicialVentana;
     MUNDO ventana;
 
