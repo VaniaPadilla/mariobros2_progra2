@@ -62,8 +62,8 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
                         int anchoMario, int& columnaBloque,
                         int& monedas) {
 
-    monedas = 0;
-    columnaBloque = -1;
+    monedas = 0;     // Inicialmente no se obtiene ninguna moneda.
+    columnaBloque = -1; // -1 indica que aun no se encontro un bloque.
 
     // La cabeza debe alcanzar la ultima fila del bloque.
     if (filaMario > 15 || filaMario + PASO_VERT <= 15)
@@ -72,11 +72,13 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
     // Revisar las columnas que ocupa la cabeza de Mario.
     for (int j = columnaMario; j < columnaMario + anchoMario; j++) {
 
-        if (j < 0 || j >= COLS_MUNDO) continue;
+        // Evitar acceder a columnas fuera del mundo.
+        if (j < 0 || j >= COLS_MUNDO) continue; 
 
         char tipo = mundoCod[15][j];
 
-        // Bloques disponibles: ladrillo o caja con monedas.
+        // '#' = ladrillo; '*', 'a' y 'b' = cajas disponibles.
+        // Otros codigos no corresponden a bloques activables.
         if (tipo != '#' && tipo != '*' &&
             tipo != 'a' && tipo != 'b') continue;
 
@@ -86,7 +88,8 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
         while (inicio > 0 && mundoCod[15][inicio - 1] == tipo)
             inicio--;
 
-        // Contar cuantos pixeles horizontales de ese bloque toca Mario.
+        // Contar cuantas de las 9 columnas del bloque
+        // coinciden horizontalmente con el ancho de Mario.
         int toques = 0;
 
         for (int k = 0; k < 9; k++) {
@@ -99,25 +102,25 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
 
         columnaBloque = inicio;
 
-        // LADRILLO: dibujar una grieta diagonal.
+        // LADRILLO: crear una grieta diagonal negra.
         if (tipo == '#') {
 
             for (int k = 0; k < 9; k++) {
                 mundo[7 + k][inicio + k] = C_NEGRO;
             }
 
-            return '#';
+            return '#'; // Informar que se golpeo un ladrillo.
         }
 
-        // LUCKY BOX: cuantas monedas quedan disponibles.
+        // LUCKY BOX: determinar cuantas monedas quedan.
         int restantes = 3;
 
         if (tipo == 'a') {restantes = 2;}
         if (tipo == 'b') {restantes = 1;}
 
-        // Sorteo entre 0 y las monedas restantes.
+        // Crear un generador pseudoaleatorio una sola vez.
         static std::mt19937 generador(std::random_device{}());
-        std::uniform_int_distribution<int> sorteo(0, restantes);
+        std::uniform_int_distribution<int> sorteo(0, restantes); // Elegir una cantidad entre 0 y las monedas restantes.
 
         monedas = sorteo(generador);
         restantes -= monedas;
@@ -129,6 +132,7 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
         if (restantes == 1) {nuevoEstado = 'b';}
         if (restantes == 0) {nuevoEstado = '1';}
 
+        // Actualizar las 9 x 9 celdas de la lucky box.
         for (int i = 7; i < 16; i++) {
             for (int k = inicio; k < inicio + 9; k++) {
 
@@ -140,10 +144,10 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
             }
         }
 
-        return '*';
+        return '*'; // Informar que se golpeo una lucky box.
     }
 
-    return '0';
+    return '0'; // No se encontro ningun bloque golpeable.
 }
 
 void Mapa::terminarGolpe(char tipo, int columnaBloque) {

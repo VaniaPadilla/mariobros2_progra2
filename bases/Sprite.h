@@ -1,4 +1,3 @@
-
 #ifndef MARIO2_SPRITE_H
 #define MARIO2_SPRITE_H
 
@@ -7,6 +6,8 @@
 
 using MUNDO = std::vector<std::vector<int>>;
 
+// Clase base que almacena la apariencia, dimensiones
+// y posicion de los objetos graficos del videojuego.
 class Sprite {
 private:
     std::string nombre;
@@ -16,17 +17,11 @@ private:
 
 public:
 
-    Sprite (std::string nombre, int alto, int ancho, MUNDO matriz, int posX, int posY);
+    // Constructor y destructor
+    Sprite(std::string nombre, int alto, int ancho,
+           MUNDO matriz, int posX, int posY);
+
     virtual ~Sprite();
-
-    //
-
-    static void dibujar(MUNDO& mundito, const Sprite& spritito, int posX, int posY);
-    static void borrar(MUNDO& mundito, const Sprite& spritito, int posX, int posY);
-
-    void modificar(MUNDO& nuevaMat);
-
-    static Sprite clonar(Sprite spritito);
 
     // Getters & Setters
 
@@ -48,6 +43,5 @@ public:
     int get_pos_y() const;
     void set_pos_y(int pos_y);
 };
-
 
 #endif //MARIO2_SPRITE_H

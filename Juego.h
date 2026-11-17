@@ -21,6 +21,7 @@ private:
 
     bool iniciado;                      // ya se escribio init
     bool terminado;                     // Mario perdio o se salio del programa
+    std::string mensajeTurno;           // Mensajes visibles al terminar cada comando
 
 public:
     Juego();

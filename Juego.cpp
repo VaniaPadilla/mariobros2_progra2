@@ -103,7 +103,10 @@ void Juego::iniciar() {
         if (clave != "init" && clave != "exit") {
 
             if (clave == "load") {
+                mensajeTurno.clear();
                 cargar();
+                std::cout << mensajeTurno;
+                mensajeTurno.clear();
             }
             else {
                 std::cout << "invalid operation\n";
@@ -127,13 +130,10 @@ void Juego::iniciar() {
 void Juego::ejecutar() {
 
     std::string eleccion;
-
-    std::cout
-        << "Welcome to the world of super mario bros xyz\n";
-
     // Mostrar el escenario al comenzar el juego.
     mapa->dibujarEscena();
-
+    // Evitar que se borre por el codigo ANSI
+    std::cout << "Welcome to the world of super mario bros xyz\n";
     do {
         std::cout << "Comando: ";
 
@@ -147,6 +147,9 @@ void Juego::ejecutar() {
             terminado = true;
             break;
         }
+
+        // Preparar los avisos correspondientes a este comando.
+        mensajeTurno.clear();
 
         // Verificaciones en preparación a un posible salto especial.
 
@@ -163,10 +166,10 @@ void Juego::ejecutar() {
             if (eleccion == "right" || eleccion == "left" ||
             eleccion == "top" || eleccion == "up" ||
             eleccion == "up-right" || eleccion == "up-left") {
-            std::cout << "Esta seccion es inaccesible\n"; }
+            mensajeTurno += "Esta seccion es inaccesible\n"; }
             
             else {
-            std::cout << "invalid operation\n";
+            mensajeTurno += "invalid operation\n";
             }
         }
 
@@ -190,7 +193,7 @@ void Juego::ejecutar() {
                 // En caso que salto, ejecutar animación como en el proyecto 1
                 animarSalto();}
             else {
-                // Para right y left no hay animacion, no alcanzo el presupuesto OwO (bromita)
+                // Los movimientos horizontales se dibujan sin animacion intermedia.
                 mapa->moverEscena();
                 mapa->dibujarEscena();
                 }
@@ -208,6 +211,11 @@ void Juego::ejecutar() {
             jugador->set_vida(false);
             terminado = true;
             std::cout << "Game Over: Mario cayo al vacio\n";
+        }
+
+        // Mostrar los mensajes cuando termina el ultimo redibujado.
+        if (!mensajeTurno.empty()) {
+            std::cout << mensajeTurno;
         }
 
     } while (!terminado);
@@ -295,7 +303,7 @@ void Juego::moverEnemigos() {
             entidades[i]->is_vida()) {
             // Siempre camina hacia la izquierda.
             entidades[i]->moverse(""); 
-            // Son tontitos, no piensan
+            // Los Goombas se desplazan automaticamente hacia la izquierda.
 
             int columna = entidades[i]->get_pos_y();
             int ancho = entidades[i]->get_ancho();
@@ -311,9 +319,9 @@ void Juego::moverEnemigos() {
 
             if (fueraDelMapa || sobreHueco) {
                 eliminarGoomba(i);
-                std::cout << "Un Goomba ha caido o salido del mapa\n";
+                mensajeTurno += "Un Goomba ha caido o salido del mapa\n";
                 // El vector ahora tiene un elemento menos.
-                i--; //Es como el parcial de progra :o
+                i--; // Retroceder el indice tras eliminar un elemento del vector.
             }
         }
     }
@@ -342,7 +350,7 @@ void Juego::animarSalto() {
         jugador->get_ancho(),
         columnaBloque,
         monedas
-    ); //Comprobamos al cabezon de mario
+    ); // Detectar si la parte superior de Mario golpea un bloque.
 
     // Pausa para visualizar a Mario en el aire.
 
@@ -364,10 +372,10 @@ void Juego::animarSalto() {
         for (int i = 0; i < monedas; i++){
             jugador->sumarMoneda();}
 
-        std::cout << "Recibiste " << monedas << " monedas\n";
+        mensajeTurno += "Recibiste " + std::to_string(monedas) + " monedas\n";
 
         if (monedas == 3){
-            std::cout << "Tuviste buena suerte\n";}
+            mensajeTurno += "Tuviste buena suerte\n";}
     } //Resultado del sorteo de monedas
 
     mapa->moverEscena();
@@ -558,7 +566,7 @@ bool Juego::Supervisor(const std::string &comando)
             }
         }
     }
-    // No saltar fuera del mapani atravesar la tuberia verticalmente.
+        // Impedir saltos fuera del mapa o a traves de la tuberia.
     if (comando == "top" || comando == "up") {
 
         int filaNueva = jugador->get_pos_x() - PASO_VERT;
@@ -636,7 +644,7 @@ void Juego::revisarChoqueGoombas(bool aterrizando, int filaAerea) {
 
             mapa->dibujarEscena();
 
-            std::cout << "Goomba aplastado! +1 moneda\n";
+            mensajeTurno += "Goomba aplastado! +1 moneda\n";
 
             i--;
         }
@@ -661,17 +669,17 @@ void Juego::revisarChoqueGoombas(bool aterrizando, int filaAerea) {
 void Juego::guardar() {
 
     if (Guardado::guardar(*this, "partida.txt")) {
-        std::cout << "Partida guardada\n";}
+        mensajeTurno += "Partida guardada\n";}
     else {
-        std::cout << "No se pudo guardar la partida\n";}
+        mensajeTurno += "No se pudo guardar la partida\n";}
 }
 
 void Juego::cargar() {
 
     if (Guardado::cargar(*this, "partida.txt")) {
-        std::cout << "Partida cargada\n";}
+        mensajeTurno += "Partida cargada\n";}
     else {
-        std::cout << "No existe una partida valida para cargar\n";}
+        mensajeTurno += "No existe una partida valida para cargar\n";}
 }
 
 //--------------------------------------------

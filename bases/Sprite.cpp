@@ -1,7 +1,10 @@
 
 #include "Sprite.h"
 
-Sprite::Sprite (std::string nombre, int alto, int ancho, MUNDO matriz, int posX, int posY) {
+// Constructor que inicializa las propiedades del sprite.
+Sprite::Sprite(std::string nombre, int alto, int ancho,
+               MUNDO matriz, int posX, int posY) {
+
     this->nombre = nombre;
     this->alto = alto;
     this->ancho = ancho;
@@ -10,75 +13,56 @@ Sprite::Sprite (std::string nombre, int alto, int ancho, MUNDO matriz, int posX,
     this->posY = posY;
 }
 
+// Destructor virtual que permite destruir objetos derivados.
 Sprite::~Sprite() {
-}
-
-// Métodos
-
-void Sprite::dibujar(MUNDO& mundito, const Sprite& spritito, int posX, int posY) {
-    for (int i=0; i <= spritito.alto; i++) {
-        for (int j=0; j <= spritito.ancho; j++) {
-            mundito[posX][posY] = spritito.get_matriz()[i][j];
-        }
-    }
-}
-
-void Sprite::borrar(MUNDO& mundito, const Sprite& spritito, int posX, int posY) {
-    for (int i=0; i <= spritito.alto; i++) {
-        for (int j=0; j <= spritito.ancho; j++) {
-            if (posX >= 43){
-                mundito[posX][posY] = 1;
-            } else{
-                mundito[posX][posY] = 0;
-            }
-        }
-    }
-}
-
-
-void Sprite::modificar(MUNDO& nuevaMat) {
-    int fil = nuevaMat.size();
-    int col = nuevaMat[0].size();
-    for (int i=0; i <= fil; i++) {
-        for (int j=0; j <= col; j++) {
-            matriz[i][j] = nuevaMat[i][j];
-        }
-    }
-}
-
-Sprite Sprite::clonar(Sprite spritito) {
-    return {spritito.nombre, spritito.alto, spritito.ancho, spritito.matriz, spritito.posX, spritito.posY};
 }
 
 // Getters & Setters
 
 std::string Sprite::get_nombre() const {
-    return nombre; }
-void Sprite::set_nombre(std::string nombre) {
-    this->nombre = nombre; }
+    return nombre;
+}
 
-const MUNDO &Sprite::get_matriz() const {
-    return matriz; }
+void Sprite::set_nombre(std::string nombre) {
+    this->nombre = nombre;
+}
+
+const MUNDO& Sprite::get_matriz() const {
+    return matriz;
+}
+
 void Sprite::set_matriz(MUNDO matriz) {
-    this->matriz = matriz; }
+    this->matriz = matriz;
+}
 
 int Sprite::get_alto() const {
-    return alto; }
+    return alto;
+}
+
 void Sprite::set_alto(int alto) {
-    this->alto = alto; }
+    this->alto = alto;
+}
 
 int Sprite::get_ancho() const {
-    return ancho; }
+    return ancho;
+}
+
 void Sprite::set_ancho(int ancho) {
-    this->ancho = ancho; }
+    this->ancho = ancho;
+}
 
 int Sprite::get_pos_x() const {
-    return posX; }
+    return posX;
+}
+
 void Sprite::set_pos_x(int pos_x) {
-    posX = pos_x; }
+    posX = pos_x;
+}
 
 int Sprite::get_pos_y() const {
-    return posY; }
-void Sprite::set_pos_y(int pos_y) {
-    posY = pos_y; }
+    return posY;
+}
 
+void Sprite::set_pos_y(int pos_y) {
+    posY = pos_y;
+}
