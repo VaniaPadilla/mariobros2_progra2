@@ -200,7 +200,7 @@ void Juego::ejecutar() {
         if (!terminado && !jugador->is_aire() && centroSobreHueco())
         {
             std::this_thread::sleep_for(std::chrono::milliseconds(350));
-            jugador->muerte_dano_caida();
+            jugador->muerte_dano_caida(); // Mario se muere dentro del hueco
             mapa->moverEscena();
             mapa->dibujarEscena();
             std::this_thread::sleep_for(std::chrono::milliseconds(600));
