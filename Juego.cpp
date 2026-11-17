@@ -194,11 +194,16 @@ void Juego::ejecutar() {
                 mapa->dibujarEscena();
                 }
             }
-
-        if (!jugador->is_aire() && centroSobreHueco()) {
-        jugador->set_vida(false);
-        terminado = true;
-        std::cout << "Game Over: Mario cayo al vacio\n";
+        if (!jugador->is_aire() && centroSobreHueco()) 
+        {
+            std::this_thread::sleep_for(std::chrono::milliseconds(350));
+            jugador->muerte_dano_caida();
+            mapa->moverEscena();
+            mapa->dibujarEscena();
+            std::this_thread::sleep_for(std::chrono::milliseconds(600));
+            jugador->set_vida(false);
+            terminado = true;
+            std::cout << "Game Over: Mario cayo al vacio\n";
         }
 
     } while (!terminado);

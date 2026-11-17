@@ -4,6 +4,7 @@
 
 #include "Entidad.h"
 #include "Constantes.h"
+#include "SpritesData.h"
 
 class Jugador : public Entidad {
 private:
@@ -24,6 +25,8 @@ public:
 
     // Segundo fotograma del salto.
     void aterrizar();
+    // Reposiciona a Mario dentro del precipicio.
+    void muerte_dano_caida();
 
     // Permite identificar comandos de salto.
     static bool esSalto(const std::string& direccion);
