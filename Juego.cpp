@@ -129,6 +129,7 @@ void Juego::ejecutar() {
         }
 
         bool saltoTuberia = CercaTUBERIA(eleccion); //Ver si activa el supersalto
+        bool saltoHueco = CercaHUECO(eleccion); //Ver si activa el supersalto
         // Procesar el comando de Mario.
         bool valido = procesarComando(eleccion);
 
@@ -146,31 +147,33 @@ void Juego::ejecutar() {
         // Ambos Goombas se mueven una vez por comando,
         // incluso cuando la instruccion es invalida. Decisión estilistica
         moverEnemigos();
-
-        if (valido && saltoTuberia) {
+        // Ambos supersaltos llegan directamente a una zona segura.
+        if (valido && (saltoTuberia || saltoHueco)) {
             mapa->moverEscena();
             mapa->dibujarEscena();
-            continue;
         }
-
-        if (valido && (eleccion == "right" || eleccion == "left")) {
-            revisarApoyoTuberia();}
+        else  {
+            if (valido && (eleccion == "right" || eleccion == "left")) {
+                revisarApoyoTuberia();}
         
-        if (valido && Jugador::esSalto(eleccion)) {
-
-            // En caso que salto, ejecutar animación como en el proyecto 1
-            animarSalto();
+            if (valido && Jugador::esSalto(eleccion)) {
+                // En caso que salto, ejecutar animación como en el proyecto 1
+                animarSalto();}
+            else {
+                // Para right y left no hay animacion, no alcanzo el presupuesto OwO (bromita)
+                mapa->moverEscena();
+                mapa->dibujarEscena();
+                }
+            }
+        if (!jugador->is_aire() && centroSobreHueco()) 
+        {
+        jugador->set_vida(false);
+        terminado = true;
+        std::cout << "Game Over: Mario cayo al vacio\n";
         }
-        else {
-
-            // Para right y left no hay animacion, no alcanzo el presupuesto OwO (bromita)
-            mapa->moverEscena();
-            mapa->dibujarEscena();
-        }
-
     } while (!terminado);
-
-    std::cout << "Se salio del juego\n";
+    if (jugador->is_vida()) {
+    std::cout << "Se salio del juego\n";}
 }
 
 void Juego::moverEnemigos() {
@@ -267,6 +270,48 @@ void Juego::reposicionar(const std::string& eleccion) {
     jugador->set_aire(false);
 }
 
+bool Juego::CercaHUECO(const std::string& eleccion) {
+
+    if (jugador->is_aire()) return false;
+
+    int fila = jugador->get_pos_x();
+    int columna = jugador->get_pos_y();
+    int bordeTuberia = COL_TUBERIA + ANCHO_TUBERIA;
+
+    // Desde el extremo derecho de la tuberia hacia la otra orilla.
+    if (eleccion == "up-right" &&
+        fila == FILA_TUBERIA - jugador->get_alto() &&
+        columna >= bordeTuberia - jugador->get_ancho() &&
+        columna < bordeTuberia) {
+        return true; //forma de irse seguro
+    }
+
+    // Desde la orilla derecha hacia el suelo al costado de la tuberia.
+    if (eleccion == "up-left" &&
+        fila == FILA_PISO - jugador->get_alto() &&
+        columna >= FIN_HUECO &&
+        columna <= FIN_HUECO + PASO_HORIZ) {
+        return true; //forma de regresar seguro
+    }
+
+    return false;
+}
+
+void Juego::saltarHueco(const std::string& eleccion) {
+
+    if (eleccion == "up-right") {
+        // El piso reaparece en FIN_HUECO.
+        jugador->set_pos_y(FIN_HUECO);
+    }
+    else if (eleccion == "up-left") {
+        // Franja de tierra inmediatamente a la derecha de la tuberia.
+        jugador->set_pos_y(COL_TUBERIA + ANCHO_TUBERIA);
+    }
+
+    jugador->set_pos_x(FILA_PISO - jugador->get_alto());
+    jugador->set_aire(false);
+}
+
 bool Juego::chocaTuberia(int fila, int columna) const {
 
     // Comprobar superposicion de dos rectangulos
@@ -302,6 +347,11 @@ void Juego::revisarApoyoTuberia() {
 
         jugador->set_aire(false); //Con esto logramos que mario no vuele
     }
+}
+
+bool Juego::centroSobreHueco() const {
+    int centro = jugador->get_pos_y() + jugador->get_ancho() / 2;
+    return centro >= INICIO_HUECO && centro < FIN_HUECO;
 }
 
 bool Juego::Supervisor(const std::string &comando)
@@ -348,6 +398,12 @@ bool Juego::Supervisor(const std::string &comando)
 }
 
 bool Juego::procesarComando(const std::string &comando) {
+    
+    // Prioridad al salto del hueco para no rechazarlo en Supervisor.
+    if (CercaHUECO(comando)) {
+        saltarHueco(comando);
+        return true;
+    }
 
     if (CercaTUBERIA(comando)) {
     reposicionar(comando);

@@ -55,5 +55,8 @@ extern const MUNDO goombaS;
 const int FILA_TUBERIA = 25;
 const int COL_TUBERIA = 141;
 // Usado para que Mario active su megasalto
-
+// Posicion del hueco dentro del mundo.
+const int INICIO_HUECO = 166;
+const int FIN_HUECO = 181;
+// Usado para que Mario active su megasalto
 #endif //MARIO2_SPRITESDATA_H

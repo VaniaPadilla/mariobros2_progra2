@@ -41,9 +41,14 @@ public:
     // Tuberia: detectar proximidad y subir a ella.
     bool CercaTUBERIA(const std::string& eleccion); //Si Mario esta cerca, usar su movimiento especial
     void reposicionar(const std::string& eleccion); //Ejecuta el movimiento especial
+    // Hueco: detectar proximidad y esquivarlo.
+    bool CercaHUECO(const std::string& eleccion); //Si Mario esta cerca, usar su movimiento especial
+    void saltarHueco(const std::string& eleccion); //Ejecuta el movimiento especial
     // Impedir atravesar la tuberia y permitir bajar de ella.
     bool chocaTuberia(int fila, int columna) const; //No atravesar
     void revisarApoyoTuberia();
+    //muerte por caida parcial
+    bool centroSobreHueco() const;
     // Movimiento y animaciones
     void moverEnemigos();    // mueve los dos Goombas una vez por turno
     void animarSalto();      // dibuja los dos fotogramas del salto

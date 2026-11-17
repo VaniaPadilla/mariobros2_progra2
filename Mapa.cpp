@@ -7,7 +7,6 @@ Mapa::Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugad
     this->filsVentana = filsVentana;
     this->colsVentana = colsVentana;
     this->colInicialVentana = 0;
-    this->jugadorcito = jugadorcito;
 
     mundo.assign(filsMundo, std::vector<int>(colsMundo, 0));
     mundoCod.assign(filsMundo, std::vector<char>(colsMundo, '0'));
