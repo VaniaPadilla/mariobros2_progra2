@@ -1,0 +1,68 @@
+[
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\main.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\main.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/main.cpp",
+  "output": "CMakeFiles/mario2.dir/main.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\bases\\Sprite.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\bases\\Sprite.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.cpp",
+  "output": "CMakeFiles/mario2.dir/bases/Sprite.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\bases\\Elemento.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\bases\\Elemento.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Elemento.cpp",
+  "output": "CMakeFiles/mario2.dir/bases/Elemento.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\bases\\Entidad.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\bases\\Entidad.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Entidad.cpp",
+  "output": "CMakeFiles/mario2.dir/bases/Entidad.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\entidades\\Jugador.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\entidades\\Jugador.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/Jugador.cpp",
+  "output": "CMakeFiles/mario2.dir/entidades/Jugador.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\entidades\\NpcEnemigo.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\entidades\\NpcEnemigo.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/NpcEnemigo.cpp",
+  "output": "CMakeFiles/mario2.dir/entidades/NpcEnemigo.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\Mapa.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\Mapa.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/Mapa.cpp",
+  "output": "CMakeFiles/mario2.dir/Mapa.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\Juego.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\Juego.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/Juego.cpp",
+  "output": "CMakeFiles/mario2.dir/Juego.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\Guardado.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\Guardado.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/Guardado.cpp",
+  "output": "CMakeFiles/mario2.dir/Guardado.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\no_clases\\SpritesData.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\no_clases\\SpritesData.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.cpp",
+  "output": "CMakeFiles/mario2.dir/no_clases/SpritesData.cpp.obj"
+},
+{
+  "directory": "C:/Users/User01/Documents/utec26_2/progra2/mario2/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/mario2.dir/includes_CXX.rsp -g -o CMakeFiles\\mario2.dir\\no_clases\\colores.cpp.obj -c C:\\Users\\User01\\Documents\\utec26_2\\progra2\\mario2\\no_clases\\colores.cpp",
+  "file": "C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/colores.cpp",
+  "output": "CMakeFiles/mario2.dir/no_clases/colores.cpp.obj"
+}
+]
