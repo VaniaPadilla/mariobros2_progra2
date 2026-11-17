@@ -168,4 +168,7 @@ CMakeFiles/mario2.dir/Mapa.cpp.obj: \
  C:/msys64/ucrt64/include/c++/16.1.0/bits/istream.tcc \
  C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Entidad.h \
  C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/Jugador.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.h \
  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h

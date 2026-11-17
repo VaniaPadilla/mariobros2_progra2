@@ -235,6 +235,7 @@ bool Juego::procesarComando(const std::string &comando) {
 
     // PosY representa la columna horizontal, PosX representa la fila vertical.
     const int columna = jugador->get_pos_y();
+    const int fila = jugador->get_pos_x();
     
     // Validación de comandos de movimiento para que no se salgan del mapa.
     if (comando == "right" || comando == "up-right") {
@@ -242,7 +243,11 @@ bool Juego::procesarComando(const std::string &comando) {
         if (columna + PASO_HORIZ + jugador->get_ancho() > COLS_MUNDO) {
             return false;
         }
+
         jugador->moverse(comando);
+
+        revisarMoneda();
+
         return true;
     }
 
@@ -251,13 +256,21 @@ bool Juego::procesarComando(const std::string &comando) {
         if (columna - PASO_HORIZ < 0) {
             return false;
         }
+
         jugador->moverse(comando);
+
+        revisarMoneda();
+
         return true;
     }
+
 
     //Por como funciona, ahora se ahorra código!
     if (comando == "top" || comando == "up") {
         jugador->moverse(comando);
+
+        revisarMoneda();
+
         return true;
     }
 
@@ -322,6 +335,54 @@ void Juego::animarSalto() {
     mapa->dibujarEscena();
 }
 
+
+void Juego::revisarMoneda() {
+
+    const int columna = jugador->get_pos_y();
+    const int fila = jugador->get_pos_x();
+    const int centro = columna +jugador->get_ancho()/2;
+
+    MUNDO mapita = mapa->get_mundo();
+    std::vector<std::vector<char>> munditoCod = mapa->get_mundo_cod();
+    
+    int choque = -1;
+
+    // esquina superior izq
+    if (munditoCod[fila][columna] == '*'){
+        choque = columna;
+    }
+
+    //esquina superior der
+    if (munditoCod[fila][columna+jugador->get_ancho()-1] == '*'){
+        choque = columna+jugador->get_ancho()-1;
+    }
+
+    //centro de mario
+    if (munditoCod[fila][centro] == '*'){
+        choque = centro;
+    }
+
+    // en caso no choque con nada
+    if (choque == -1){
+        return;
+    }
+    
+    int baseCol = choque, baseFila = fila;
+
+    while (baseCol > 0 && munditoCod[baseFila][baseCol-1] == '*') baseCol--;
+    while (baseFila > 0 && munditoCod[baseFila-1][baseCol] == '*') baseFila--;
+
+    for (int i=baseFila; i<baseFila+ALTO_SIGNO; i++) {
+        for (int j=baseCol; j<baseCol+ANCHO_SIGNO; j++) {
+            munditoCod[i][j] = '1';
+            mapita[j][i] = '4';
+         }
+    }        
+
+    mapa->set_mundo(mapita);
+    mapa->set_mundo_cod(munditoCod);
+    jugador->set_coins(jugador->get_coins() + 1);
+}
 
 
 //--------------------------------------------

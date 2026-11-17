@@ -169,13 +169,13 @@ CMakeFiles/mario2.dir/main.cpp.obj: \
  C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Entidad.h \
  C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/Jugador.h \
  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h \
  C:\Users\User01\Documents\utec26_2\progra2\mario2\Guardado.h \
  C:/msys64/ucrt64/include/c++/16.1.0/fstream \
  C:/msys64/ucrt64/include/c++/16.1.0/bits/codecvt.h \
  C:/msys64/ucrt64/include/c++/16.1.0/x86_64-w64-mingw32/bits/basic_file.h \
  C:/msys64/ucrt64/include/c++/16.1.0/x86_64-w64-mingw32/bits/c++io.h \
  C:/msys64/ucrt64/include/c++/16.1.0/bits/fstream.tcc \
- C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/NpcEnemigo.h \
- C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h \
- C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.h \
- C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/NpcEnemigo.h

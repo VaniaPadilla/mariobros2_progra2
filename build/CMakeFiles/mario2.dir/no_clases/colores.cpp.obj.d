@@ -1,6 +1,6 @@
 CMakeFiles/mario2.dir/no_clases/colores.cpp.obj: \
  C:\Users\User01\Documents\utec26_2\progra2\mario2\no_clases\colores.cpp \
- C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/colores.h \
+ C:\Users\User01\Documents\utec26_2\progra2\mario2\no_clases\colores.h \
  C:/msys64/ucrt64/include/c++/16.1.0/string \
  C:/msys64/ucrt64/include/c++/16.1.0/bits/requires_hosted.h \
  C:/msys64/ucrt64/include/c++/16.1.0/x86_64-w64-mingw32/bits/c++config.h \

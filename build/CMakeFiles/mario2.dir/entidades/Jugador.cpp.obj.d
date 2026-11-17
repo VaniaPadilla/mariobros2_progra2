@@ -162,4 +162,7 @@ CMakeFiles/mario2.dir/entidades/Jugador.cpp.obj: \
  C:/msys64/ucrt64/include/c++/16.1.0/bits/stl_vector.h \
  C:/msys64/ucrt64/include/c++/16.1.0/bits/stl_bvector.h \
  C:/msys64/ucrt64/include/c++/16.1.0/bits/vector.tcc \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h \
+ C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.h \
  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h

@@ -46,7 +46,7 @@ void Mapa::agregarElemento(Elemento elementito) {
             if (mundoMat[i][j] == TRANSPARENTE) continue;
 
             mundo[fil][col] = mundoMat[i][j];
-            mundoCod[fil][col] = elementito.getAtravesable() ? '0' : '1';
+            mundoCod[fil][col] = elementito.getEstado();
         }
     }
 }
@@ -105,7 +105,7 @@ void Mapa::dibujarEscena() const {
                     }
                 }
             }
-            lienzo += colorANSI(celda) + " " + colorANSI(9);
+            lienzo += colorANSI(celda) + "  " + colorANSI(9);
         }
         lienzo += "\n";
     }

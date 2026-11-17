@@ -246,6 +246,7 @@ CMakeFiles/mario2.dir/Mapa.cpp.obj: C:/Users/User01/Documents/utec26_2/progra2/m
   C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/Jugador.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h \
+  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/colores.h \
   C:/msys64/ucrt64/include/_mingw.h \
   C:/msys64/ucrt64/include/_mingw_mac.h \
@@ -423,6 +424,7 @@ CMakeFiles/mario2.dir/bases/Elemento.cpp.obj: C:/Users/User01/Documents/utec26_2
   C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/entidades/Jugador.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h \
+  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/colores.h \
   C:/msys64/ucrt64/include/_mingw.h \
   C:/msys64/ucrt64/include/_mingw_mac.h \
@@ -939,6 +941,7 @@ CMakeFiles/mario2.dir/entidades/Jugador.cpp.obj: C:/Users/User01/Documents/utec2
   C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Entidad.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/bases/Sprite.h \
   C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/Constantes.h \
+  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h \
   C:/msys64/ucrt64/include/_mingw.h \
   C:/msys64/ucrt64/include/_mingw_mac.h \
   C:/msys64/ucrt64/include/_mingw_off_t.h \
@@ -1641,7 +1644,6 @@ CMakeFiles/mario2.dir/no_clases/SpritesData.cpp.obj: C:/Users/User01/Documents/u
   C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/SpritesData.h
 
 CMakeFiles/mario2.dir/no_clases/colores.cpp.obj: C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/colores.cpp \
-  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/colores.h \
   C:/msys64/ucrt64/include/_mingw.h \
   C:/msys64/ucrt64/include/_mingw_mac.h \
   C:/msys64/ucrt64/include/_mingw_off_t.h \
@@ -1753,7 +1755,8 @@ CMakeFiles/mario2.dir/no_clases/colores.cpp.obj: C:/Users/User01/Documents/utec2
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/limits.h \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/mm_malloc.h \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/stddef.h \
-  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/syslimits.h
+  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/16.1.0/include/syslimits.h \
+  C:/Users/User01/Documents/utec26_2/progra2/mario2/no_clases/colores.h
 
 
 C:/Users/User01/Documents/utec26_2/progra2/mario2/Guardado.cpp:

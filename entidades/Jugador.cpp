@@ -63,6 +63,19 @@ void Jugador::aterrizar() {
     aire = false;
 }
 
+void Jugador::muerte_dano_caida() {
+
+    // Centrar horizontalmente a Mario en el hueco.
+    int centroHueco = (INICIO_HUECO + FIN_HUECO) / 2;
+
+    set_pos_y(centroHueco - get_ancho() / 2);
+
+    // Colocar a Mario en la parte inferior del mundo.
+    set_pos_x(FILS_MUNDO - get_alto());
+
+    set_aire(false);
+}
+
 // --------------------------------------------------
 // IDENTIFICAR SALTOS
 // --------------------------------------------------

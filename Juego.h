@@ -53,6 +53,8 @@ public:
     void moverEnemigos();    // mueve los dos Goombas una vez por turno
     void animarSalto();      // dibuja los dos fotogramas del salto
 
+    void revisarMoneda();
+
     // Evitar copias accidentales de los punteros.
     Juego(const Juego&);
     Juego& operator=(const Juego&);
