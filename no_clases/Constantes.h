@@ -1,6 +1,7 @@
 #ifndef MARIO2_CONSTANTES_H
 #define MARIO2_CONSTANTES_H
 
+#include <vector>
 using MUNDO = std::vector<std::vector<int>>;
 
 // -----------------------------------------------------------

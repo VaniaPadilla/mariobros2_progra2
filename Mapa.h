@@ -36,6 +36,8 @@ public:
 
     void operator+=(Entidad* entidad);
 
+    void operator+=(Elemento elemento);
+    
     void moverEscena();
 
     void dibujarEscena() const;

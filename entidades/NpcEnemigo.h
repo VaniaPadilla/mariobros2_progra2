@@ -3,7 +3,7 @@
 #define MARIO2_NPCENEMIGO_H
 
 #include "Entidad.h"
-
+#include "Constantes.h"
 
 class NpcEnemigo : public Entidad 
 {

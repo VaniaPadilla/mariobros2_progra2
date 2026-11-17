@@ -53,6 +53,10 @@ void Mapa::operator+=(Entidad* entidad) {
     entidades.push_back(entidad);
 }
 
+void Mapa::operator+=(Elemento elemento) {
+    agregarElemento(elemento);
+}
+
 void Mapa::moverEscena() {
 
     if (colInicialVentana+colsVentana - jugadorcito.get_pos_x()+12 == 42 && colInicialVentana<=150) {
