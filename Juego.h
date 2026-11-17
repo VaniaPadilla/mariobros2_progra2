@@ -13,7 +13,7 @@
 #include "SpritesData.h"
 
 class Juego {
-
+friend class Guardado;
 private:
     Mapa* mapa{};                       // memoria dinamica
     Jugador* jugador{};                 // puntero al mismo Mario de entidades[0]
