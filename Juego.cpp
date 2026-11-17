@@ -70,7 +70,7 @@ void Juego::crearElementos() {
     (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 100, false, '*');
     (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 166, false, '*');
     (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 204, false, '*');
-    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 223, false, '*');
+    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 222, false, '*');
 
     (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 73, false, '0');
     (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 91, false, '0');
@@ -78,7 +78,7 @@ void Juego::crearElementos() {
 
     (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 195, false, '0');
     (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 213, false, '0');
-    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 232, false, '0');
+    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 231, false, '0');
 
     (*mapa) += Elemento("Tuberia", ALTO_TUBERIA, ANCHO_TUBERIA, tuberiaS, FILA_TUBERIA, COL_TUBERIA, false, '0');
 }
@@ -289,7 +289,7 @@ void Juego::moverEnemigos() {
     // Los demas elementos son enemigos creados con new.
     // Cada enemigo vivo se mueve una sola vez.
 
-    for (int i = 1; i < entidades.size(); i++) {
+    for (int i = 1; i < (int)entidades.size(); i++) {
 
         if (entidades[i] != nullptr &&
             entidades[i]->is_vida()) {
@@ -574,7 +574,7 @@ bool Juego::Supervisor(const std::string &comando)
 
 void Juego::eliminarGoomba(int indice) {
 
-    if (indice <= 0 || indice >= entidades.size()) {
+    if (indice <= 0 || indice >= (int)entidades.size()) {
         return;
     }
 
@@ -595,7 +595,7 @@ void Juego::revisarChoqueGoombas(bool aterrizando, int filaAerea) {
         return;
     }
 
-    for (int i = 1; i < entidades.size(); i++) {
+    for (int i = 1; i < (int)entidades.size(); i++) {
 
         Entidad* goomba = entidades[i];
 

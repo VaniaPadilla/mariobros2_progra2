@@ -9,8 +9,7 @@ NpcEnemigo::NpcEnemigo(std::string nombre, int alto, int ancho, MUNDO matriz, in
 NpcEnemigo::~NpcEnemigo() {
 }
 
-void NpcEnemigo::moverse(std::string direccion) {
-
+void NpcEnemigo::moverse(std::string) {
     if (!is_vida()) {
         return;
     }

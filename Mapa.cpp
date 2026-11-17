@@ -112,8 +112,8 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
         // LUCKY BOX: cuantas monedas quedan disponibles.
         int restantes = 3;
 
-        if (tipo == 'a') restantes = 2;
-        if (tipo == 'b') restantes = 1;
+        if (tipo == 'a') {restantes = 2;}
+        if (tipo == 'b') {restantes = 1;}
 
         // Sorteo entre 0 y las monedas restantes.
         static std::mt19937 generador(std::random_device{}());
@@ -125,9 +125,9 @@ char Mapa::golpearBloque(int filaMario, int columnaMario,
         // Actualizar el estado de la caja.
         char nuevoEstado = '*';
 
-        if (restantes == 2) nuevoEstado = 'a';
-        if (restantes == 1) nuevoEstado = 'b';
-        if (restantes == 0) nuevoEstado = '1';
+        if (restantes == 2) {nuevoEstado = 'a';}
+        if (restantes == 1) {nuevoEstado = 'b';}
+        if (restantes == 0) {nuevoEstado = '1';}
 
         for (int i = 7; i < 16; i++) {
             for (int k = inicio; k < inicio + 9; k++) {
@@ -166,7 +166,7 @@ void Mapa::operator+=(Entidad* entidad) {
 
 void Mapa::operator-=(Entidad* entidad) {
 
-    for (int i = 0; i < entidades.size(); i++) {
+    for (int i = 0; i < (int)entidades.size(); i++) {
 
         if (entidades[i] == entidad) {
             entidades.erase(entidades.begin() + i);

@@ -1,4 +1,4 @@
 
 Notitas sobre el proyecto :D
 
-Me voy a suicidar
+Gracias Wilder x todo!!! :D
