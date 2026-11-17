@@ -1,6 +1,6 @@
 
 
-#include "../no_clases/colores.h"
+#include "colores.h"
 
 
 // Recibe un número entero y retorna un string con el código ANSI correspondiente
