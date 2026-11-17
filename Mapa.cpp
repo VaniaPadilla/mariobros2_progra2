@@ -1,13 +1,13 @@
 
 #include "Mapa.h"
 
-Mapa::Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador jugador) : jugadorcito(jugador) {
+Mapa::Mapa(int filsMundo, int colsMundo, int filsVentana, int colsVentana, Jugador& jugadorcito) : jugadorcito(jugadorcito) {
     this->filsMundo = filsMundo;
     this->colsMundo = colsMundo;
     this->filsVentana = filsVentana;
     this->colsVentana = colsVentana;
     this->colInicialVentana = 0;
-    this->jugadorcito = jugador;
+    this->jugadorcito = jugadorcito;
 
     mundo.assign(filsMundo, std::vector<int>(colsMundo, 0));
     mundoCod.assign(filsMundo, std::vector<char>(colsMundo, '0'));
@@ -37,14 +37,17 @@ void Mapa::crearMundo() {
 
 void Mapa::agregarElemento(Elemento elementito) {
     const MUNDO& mundoMat = elementito.get_matriz();
-    for (int i = 0; i < elementito.get_ancho(); i++) {
-        for (int j = 0; j < elementito.get_alto(); j++) {
+
+    for (int i = 0; i < elementito.get_alto(); i++) {
+        for (int j = 0; j < elementito.get_ancho(); j++) {
             int fil = elementito.get_pos_x() + i;
             int col = elementito.get_pos_y() + j;
 
             if (fil<0 || fil>= filsMundo || col <0 || col >= colsMundo) continue;
+            if (mundoMat[i][j] == TRANSPARENTE) continue;
+
             mundo[fil][col] = mundoMat[i][j];
-            mundoCod[i][j] = elementito.getAtravesable();
+            mundoCod[fil][col] = elementito.getAtravesable() ? '0' : '1';
         }
     }
 }
@@ -59,15 +62,27 @@ void Mapa::operator+=(Elemento elemento) {
 
 void Mapa::moverEscena() {
 
-    if (colInicialVentana+colsVentana - jugadorcito.get_pos_x()+12 == 42 && colInicialVentana<=150) {
-        colInicialVentana += 12;
+    // Mover la camara hacia la derecha
+    if (colInicialVentana + colsVentana -(jugadorcito.get_pos_y()+jugadorcito.get_ancho()) < DIST_CAMARA_DER) {
+        if(COLS_MUNDO - COLS_VENTANA < colInicialVentana + PASO_HORIZ){
+            colInicialVentana = COLS_MUNDO - COLS_VENTANA;
+        }
+        else {
+            colInicialVentana += PASO_HORIZ;
+        }
     }
-
-    if (jugadorcito.get_pos_x()+12 - colInicialVentana == 32 && colInicialVentana>=0) {
-        colInicialVentana -=12;
+    // Mover la camara hacia la izquierda
+    else if (jugadorcito.get_pos_y() - colInicialVentana < DIST_CAMARA_IZQ) {
+        if(colInicialVentana - PASO_HORIZ < 0){
+            colInicialVentana = 0;
+        }
+        else {
+            colInicialVentana -= PASO_HORIZ;
+        }
     }
 
 }
+
 
 void Mapa::dibujarEscena() const {
 
@@ -75,24 +90,28 @@ void Mapa::dibujarEscena() const {
     std::cout << "\033[2J\033[H";
 
     std::string lienzo = "";
-
-    for (int i=0; i<filsVentana; i++) {
-        for (int j=colInicialVentana; j<colsVentana; j++) {
+    for (int i = 0; i < filsVentana; i++) {
+        for (int j = colInicialVentana; j < colInicialVentana + colsVentana; j++) {
             int celda = mundo[i][j];
 
             for (const Entidad* enti : entidades) {
-                if (enti->get_pos_x() == i && enti->get_pos_y() == j) {
-                    if (enti->get_matriz()[i][j] != -1) celda = enti->get_matriz()[i][j];
+                int pos_x = enti->get_pos_x();
+                int pos_y = enti->get_pos_y();
+
+                if (pos_x <= i && i < pos_x + enti->get_alto()
+                    && pos_y <= j && j < pos_y + enti->get_ancho()) {
+                    const MUNDO& matriz = enti->get_matriz();
+                    if (matriz[i - pos_x][j - pos_y] != TRANSPARENTE) {
+                        celda = matriz[i - pos_x][j - pos_y];
+                    }
                 }
             }
-
             lienzo += colorANSI(celda) + " " + colorANSI(9);
         }
         lienzo += "\n";
     }
-
+    
     std::cout << lienzo;
-
     std::cout << "\ncoins: " << jugadorcito.get_coins() << "\n\n";
 }
 
