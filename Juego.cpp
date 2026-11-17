@@ -425,7 +425,7 @@ bool Juego::CercaHUECO(const std::string& eleccion) {
         columna >= bordeTuberia - jugador->get_ancho() &&
         columna < bordeTuberia) {
         return true; //forma de irse seguro
-    }
+    } //Decison coherente relacionada a desarrollo de videojuegos
 
     // Desde la orilla derecha hacia el suelo al costado de la tuberia.
     if (eleccion == "up-left" &&
@@ -433,7 +433,7 @@ bool Juego::CercaHUECO(const std::string& eleccion) {
         columna >= FIN_HUECO &&
         columna <= FIN_HUECO + PASO_HORIZ) {
         return true; //forma de regresar seguro
-    }
+    } //Manera de probar el regreso unica forma posible, para poder ayudar a volver
 
     return false;
 }
