@@ -1,82 +1,115 @@
 
 #include "Juego.h"
+#include <chrono>
+#include <thread>
 
-Juego::Juego() {
-    Jugador* jugador = new Jugador("Mario", ALTO_MARIO, ANCHO_MARIO, marioS );
+//--------------------------------------------
+// Constructor y destructor
+//--------------------------------------------
 
+Juego::Juego() : mapa(nullptr), jugador(nullptr), iniciado(false), terminado(false) {
+
+    // Crear jugador con memoria dinamica
+    jugador = new Jugador("Mario", ALTO_MARIO, ANCHO_MARIO, marioS );
     entidades.push_back(jugador);
 
-    Mapa* mapa = new Mapa(FILS_MUNDO, COLS_MUNDO, FILS_VENTANA, COLS_VENTANA, *jugador);
-    // memoria dinamica
-    std::cout << "antes de crear elementos";
-    crearElementos();
+    // Crear mapa con memoria dinamica
+    mapa = new Mapa(FILS_MUNDO, COLS_MUNDO, FILS_VENTANA, COLS_VENTANA, *jugador);
+    
+    // Registrar a Mario dentro del mapa.
+    (*mapa) += jugador;     // Utilizamos la sobrecarga de operadores.
 
-    iniciado = false;                     // ya se escribio init
-    terminado = false;
+    // Crear los elementos en el mapa: Goombas, arbustos, signos y ladrillos.
+    crearElementos();
 }
 
 Juego::~Juego() {
+    // Liberar la memoria dinamica del mapa.
+    delete mapa;
+
+    // Liberar a Mario y los dos Goombas.
+    // Todos fueron creados con new.
+    int cantidad = entidades.size();
+
+    for (int i = 0; i < cantidad; i++) {
+        delete entidades[i];
+    }
+
+    entidades.clear();
 }
 
+
+//--------------------------------------------
+// Métodos escenciales del juego
+//--------------------------------------------
+
+// Método que crea los elementos del mapa: Goombas, arbustos, signos y ladrillos.
+
 void Juego::crearElementos() {
+
+    // Crear los dos Goombas con memoria dinamica
     NpcEnemigo* goomba1 = new NpcEnemigo("Goomba", ALTO_GOOMBA, ANCHO_GOOMBA, goombaS, 27, 104);
     NpcEnemigo* goomba2 = new NpcEnemigo("Goomba", ALTO_GOOMBA, ANCHO_GOOMBA, goombaS, 27, 219);
     entidades.push_back(goomba1);
     entidades.push_back(goomba2);
 
-    Elemento* arbusto1 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 21, false, '0');
-    Elemento* arbusto2 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 29, false, '0');
-    Elemento* arbusto3 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 37, false, '0');
-    Elemento* arbusto4 = new Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 98, false, '0');
+    // El mapa necesita conocerlos para dibujarlos.
+    (*mapa) += goomba1;
+    (*mapa) += goomba2;     // Se usa la sobrecarga de operadores para Entidades.
 
-    Elemento* signo1 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 29, false, '*');
-    Elemento* signo2 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 82, false, '*');
-    Elemento* signo3 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 100, false, '*');
+    // Se usa la sobrecarga de operadores para Elementos.
+    (*mapa) += Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 21, false, '0');
+    (*mapa) += Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 29, false, '0');
+    (*mapa) += Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 37, false, '0');
+    (*mapa) += Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 98, false, '0');
+    (*mapa) += Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 189, false, '0');
+    (*mapa) += Elemento("Arbusto", ALTO_ARBUSTO, ANCHO_ARBUSTO, arbustoS, 36, 217, false, '0');
+    
+    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 29, false, '*');
+    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 82, false, '*');
+    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 100, false, '*');
+    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 166, false, '*');
+    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 204, false, '*');
+    (*mapa) += Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 223, false, '*');
 
-    Elemento* signo4 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 166, false, '*');
-    Elemento* signo5 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 204, false, '*');
-    Elemento* signo6 = new Elemento("Signo", ALTO_SIGNO, ANCHO_SIGNO, signoS, 7, 223, false, '*');
+    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 73, false, '0');
+    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 91, false, '0');
+    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 109, false, '0');
 
-    Elemento* ladrillo1 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 73, false, '0');
-    Elemento* ladrillo2 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 91, false, '0');
-    Elemento* ladrillo3 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 109, false, '0');
+    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 195, false, '0');
+    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 213, false, '0');
+    (*mapa) += Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 232, false, '0');
 
-    Elemento* ladrillo4 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 195, false, '0');
-    Elemento* ladrillo5 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 213, false, '0');
-    Elemento* ladrillo6 = new Elemento("Ladrillo", ALTO_LADRILLO, ANCHO_LADRILLO, ladrilloS, 7, 232, false, '0');
-
-    Elemento* tuberia = new Elemento("Tuberia", ALTO_TUBERIA, ANCHO_TUBERIA, tuberiaS, 25, 141, false, '0');
-
-    mapa->agregarElemento(*arbusto1);
-    mapa->agregarElemento(*arbusto2);
-    mapa->agregarElemento(*arbusto3);
-    mapa->agregarElemento(*arbusto4);
-
-    mapa->agregarElemento(*signo1);
-    mapa->agregarElemento(*signo2);
-    mapa->agregarElemento(*signo3);
-
-    mapa->agregarElemento(*ladrillo1);
-    mapa->agregarElemento(*ladrillo2);
-    mapa->agregarElemento(*ladrillo3);
-
-    mapa->agregarElemento(*signo4);
-    mapa->agregarElemento(*signo5);
-    mapa->agregarElemento(*signo6);
-
-    mapa->agregarElemento(*ladrillo4);
-    mapa->agregarElemento(*ladrillo5);
-    mapa->agregarElemento(*ladrillo6);
-
-    mapa->agregarElemento(*tuberia);
+    (*mapa) += Elemento("Tuberia", ALTO_TUBERIA, ANCHO_TUBERIA, tuberiaS, FILA_TUBERIA, COL_TUBERIA, false, '0');
 }
 
 
+// Método que inicia el juego, espera el comando "init" o "exit".
+
 void Juego::iniciar() {
+
     std::string clave;
+
     do {
-        std::cout << "ʕ⊙ᴥ⊙ʔ";
-        std::cin >> clave;
+        std::cout << "ʕ⊙ᴥ⊙ʔ ";
+
+        // Si falla la lectura, terminar el programa.
+        if (!(std::cin >> clave)) { //Es una medida de seguridad
+            terminado = true;
+            return;
+        }
+
+        //En caso quiero recargar una partida
+        if (clave != "init" && clave != "exit") {
+
+            if (clave == "load") {
+                cargar();
+            }
+            else {
+                std::cout << "invalid operation\n";
+            }
+        }
+
     } while (clave != "init" && clave != "exit");
 
     if (clave == "init") {
@@ -89,57 +122,149 @@ void Juego::iniciar() {
 }
 
 
+// Método que ejecuta el bucle principal del juego, hasta que Mario muere o se sale del programa.
+
 void Juego::ejecutar() {
+
     std::string eleccion;
 
-    std::cout << "Welcome to the world of super mario bros xyz \n";
+    std::cout
+        << "Welcome to the world of super mario bros xyz\n";
+
+    // Mostrar el escenario al comenzar el juego.
+    mapa->dibujarEscena();
 
     do {
         std::cout << "Comando: ";
-        std::cin >> eleccion;
 
-        if (!procesarComando(eleccion)) {
-            std::cout << "Comando invalido\n";
+        if (!(std::cin >> eleccion)) { //Misma lógica que el anterior
+            terminado = true;
+            break;
         }
 
-        for (int i = 1; i < entidades.size(); i++) {
-            entidades[i]->moverse("");
+        // Exit termina inmediatamente, el goomba ni llega a moverse
+        if (eleccion == "exit") {
+            terminado = true;
+            break;
         }
 
+        // Verificaciones en preparación a un posible salto especial.
 
-    } while (eleccion != "exit");
+        bool saltoTuberia = CercaTUBERIA(eleccion); //Ver si activa el supersalto
+        bool saltoHueco = CercaHUECO(eleccion); //Ver si activa el supersalto
 
-    std::cout << "Se salio del juego";
+
+        // Procesar el comando de Mario.
+        // En caso ser válido, se actualiza la posición de Mario y del mapa.
+        bool valido = procesarComando(eleccion);
+
+        if (!valido) {
+            
+            if (eleccion == "right" || eleccion == "left" ||
+            eleccion == "top" || eleccion == "up" ||
+            eleccion == "up-right" || eleccion == "up-left") {
+            std::cout << "Esta seccion es inaccesible\n"; }
+            
+            else {
+            std::cout << "invalid operation\n";
+            }
+        }
+
+        // Ambos Goombas se mueven una vez por comando,
+        // incluso cuando la instruccion es invalida. Decisión estilistica
+        moverEnemigos();
+
+
+        // Ambos supersaltos llegan directamente a una zona segura.
+        if (valido && (saltoTuberia || saltoHueco)) {
+            mapa->moverEscena();
+            mapa->dibujarEscena();
+        }
+
+        else  {
+            if (valido && (eleccion == "right" || eleccion == "left")) {
+                revisarApoyoTuberia();}
+        
+            if (valido && Jugador::esSalto(eleccion)) {
+                // En caso que salto, ejecutar animación como en el proyecto 1
+                animarSalto();}
+            else {
+                // Para right y left no hay animacion, no alcanzo el presupuesto OwO (bromita)
+                mapa->moverEscena();
+                mapa->dibujarEscena();
+                }
+            }
+
+        if (!jugador->is_aire() && centroSobreHueco()) {
+        jugador->set_vida(false);
+        terminado = true;
+        std::cout << "Game Over: Mario cayo al vacio\n";
+        }
+
+    } while (!terminado);
+
+    if (jugador->is_vida()) {
+    std::cout << "Se salio del juego\n";}
 }
 
+
+// Método que procesa un comando de Mario, devuelve true si es valido y false si no lo es.
+// De ser válido se llama al método moverse de Mario, que actualiza su posición y la del mapa.
+
 bool Juego::procesarComando(const std::string &comando) {
-    if (comando == "right" && entidades[0]->get_pos_x() + PASO_HORIZ*2 <= COLS_MUNDO) {
-        entidades[0]->moverse(comando);
-        return true;
-    }
-    if (comando == "left" && entidades[0]->get_pos_x() - PASO_HORIZ >= 0) {
-        entidades[0]->moverse(comando);
-        return true;
-    }
-    if (comando == "top") {
-        entidades[0]->moverse(comando);
-        return true;
-    }
-    if (comando == "up-right" && entidades[0]->get_pos_x()+PASO_HORIZ*2 <= COLS_MUNDO) {
-        entidades[0]->moverse(comando);
-        return true;
-    }
-    if (comando == "up-left" && entidades[0]->get_pos_x() - PASO_HORIZ >= 0) {
-        entidades[0]->moverse(comando);
+    
+    // Verificación de saltos especiales
+
+    // Prioridad al salto del hueco para no rechazarlo en Supervisor.
+    if (CercaHUECO(comando)) {
+        saltarHueco(comando);
+        return true; }
+
+    if (CercaTUBERIA(comando)) {
+        reposicionar(comando);
+        return true; }
+
+    if(!Supervisor(comando)){
+        return false; }
+
+
+    // PosY representa la columna horizontal, PosX representa la fila vertical.
+    const int columna = jugador->get_pos_y();
+    
+    // Validación de comandos de movimiento para que no se salgan del mapa.
+    if (comando == "right" || comando == "up-right") {
+
+        if (columna + PASO_HORIZ + jugador->get_ancho() > COLS_MUNDO) {
+            return false;
+        }
+        jugador->moverse(comando);
         return true;
     }
 
-    if (comando == "save") {
-        //guardar();
+    if (comando == "left" || comando == "up-left") {
+
+        if (columna - PASO_HORIZ < 0) {
+            return false;
+        }
+        jugador->moverse(comando);
         return true;
     }
+
+    //Por como funciona, ahora se ahorra código!
+    if (comando == "top" || comando == "up") {
+        jugador->moverse(comando);
+        return true;
+    }
+
+    // Comandos para guardar y cargar el juego.
+
+    if (comando == "save") {
+        guardar();
+        return true;
+    }
+
     if (comando == "load") {
-        //cargar();
+        cargar();
         return true;
     }
 
@@ -147,12 +272,264 @@ bool Juego::procesarComando(const std::string &comando) {
 }
 
 
-//?
-int Jugador::get_coins() const {
-    return coins;
+// Método que mueve a los enemigos, si es que estan vivos.
+
+void Juego::moverEnemigos() {
+
+    // entidades[0] es Mario.
+    // entidades[1] y entidades[2] son Goombas.
+    // Cada enemigo vivo se mueve una sola vez.
+
+    int cantidad = entidades.size(); //POO, permite reutilizar código, por si se desea añadir más goombas
+
+    for (int i = 1; i < cantidad; i++) {
+
+        if (entidades[i] != nullptr &&
+            entidades[i]->is_vida()) 
+            {
+            // El Goomba ignora la direccion recibida
+            entidades[i]->moverse("");  // Siempre camina hacia la izquierda.
+        }
+    }
 }
 
-// Getters & Setters
+
+// Método que dibuja la animación del salto de Mario, con dos fotogramas.
+
+void Juego::animarSalto() {
+
+    // PRIMER FOTOGRAMA:
+    // Mario ya esta arriba porque antes ejecutamos
+    // jugador->moverse("top") o un salto diagonal.
+    mapa->moverEscena(); 
+    mapa->dibujarEscena();
+
+    // Pausa para visualizar a Mario en el aire.
+    std::this_thread::sleep_for(
+        std::chrono::milliseconds(350)
+    );
+
+    // SEGUNDO FOTOGRAMA:
+
+    jugador->aterrizar();     // Mario vuelve a su fila inicial. 
+    //Conservo columna nueva, en caso de salto diagonal
+    mapa->moverEscena();
+    mapa->dibujarEscena();
+}
+
+
+
+//--------------------------------------------
+// Métodos auxiliares para la tuberia y el hueco
+//--------------------------------------------
+
+// Método que detecta si Mario esta en cercanía con la tuberia y puede subir a ella con un salto diagonal.
+// Retorna si es posible o no
+
+bool Juego::CercaTUBERIA(const std::string& eleccion) {
+
+    // Solo aceptar saltos diagonales desde el suelo.
+    if (jugador->is_aire() || jugador->get_pos_x() != FILA_PISO - jugador->get_alto()) {
+        return false;}
+
+    int columna = jugador->get_pos_y();
+
+    int bordeMario = columna + jugador->get_ancho();
+    int bordeTuberia = COL_TUBERIA + ANCHO_TUBERIA;
+
+    // Subir desde el lado izquierdo.
+    if (eleccion == "up-right") {
+        if (bordeMario <= COL_TUBERIA && COL_TUBERIA - bordeMario <= PASO_HORIZ) {
+            return true;}
+    }
+
+    // Subir desde el lado derecho.
+    else if (eleccion == "up-left") {
+        if (columna >= bordeTuberia && columna - bordeTuberia <= PASO_HORIZ) {
+            return true;}
+    }
+
+    return false;
+}
+
+
+// Reposiciona a Mario sobre la tuberia, si es que cercaTUBERIA() retorno true.
+
+void Juego::reposicionar(const std::string& eleccion) {
+
+    if (!CercaTUBERIA(eleccion)) {
+        return;
+    }
+
+    // La parte inferior de Mario queda apoyada
+    // exactamente en la parte superior de la tuberia.
+    jugador->set_pos_x(FILA_TUBERIA - jugador->get_alto());
+
+    if (eleccion == "up-right") {
+        jugador->set_pos_y(COL_TUBERIA);
+    }
+
+    else if (eleccion == "up-left") {
+        jugador->set_pos_y(COL_TUBERIA + ANCHO_TUBERIA - jugador->get_ancho());
+    }
+
+    // Actualizar la altura de aterrizaje de Mario.
+    jugador->set_aire(false);
+}
+
+
+// Método que detecta si Mario esta en cercanía con el hueco y puede saltarlo con un salto diagonal.
+// Retorna si es posible o no
+
+bool Juego::CercaHUECO(const std::string& eleccion) {
+
+    if (jugador->is_aire()) return false;
+
+    int fila = jugador->get_pos_x();
+    int columna = jugador->get_pos_y();
+    int bordeTuberia = COL_TUBERIA + ANCHO_TUBERIA;
+
+    // Desde el extremo derecho de la tuberia hacia la otra orilla.
+    if (eleccion == "up-right" &&
+        fila == FILA_TUBERIA - jugador->get_alto() &&
+        columna >= bordeTuberia - jugador->get_ancho() &&
+        columna < bordeTuberia) {
+        return true; //forma de irse seguro
+    }
+
+    // Desde la orilla derecha hacia el suelo al costado de la tuberia.
+    if (eleccion == "up-left" &&
+        fila == FILA_PISO - jugador->get_alto() &&
+        columna >= FIN_HUECO &&
+        columna <= FIN_HUECO + PASO_HORIZ) {
+        return true; //forma de regresar seguro
+    }
+
+    return false;
+}
+
+// Método que reposiciona a Mario sobre el piso
+
+void Juego::saltarHueco(const std::string& eleccion) {
+
+    if (eleccion == "up-right") {
+        // El piso reaparece en FIN_HUECO.
+        jugador->set_pos_y(FIN_HUECO);
+    }
+    else if (eleccion == "up-left") {
+        // Franja de tierra inmediatamente a la derecha de la tuberia.
+        jugador->set_pos_y(COL_TUBERIA + ANCHO_TUBERIA);
+    }
+
+    jugador->set_pos_x(FILA_PISO - jugador->get_alto());
+    jugador->set_aire(false);
+}
+
+
+
+bool Juego::chocaTuberia(int fila, int columna) const {
+
+    // Comprobar superposicion de dos rectangulos
+    return fila < FILA_TUBERIA + ALTO_TUBERIA &&
+           fila + jugador->get_alto() > FILA_TUBERIA &&
+           columna < COL_TUBERIA + ANCHO_TUBERIA &&
+           columna + jugador->get_ancho() > COL_TUBERIA;
+}
+
+void Juego::revisarApoyoTuberia() {
+
+    int filaSuperior =
+        FILA_TUBERIA - jugador->get_alto();
+
+    // Solo comprobar cuando Mario esta encima.
+    if (jugador->get_pos_x() != filaSuperior) {
+        return;
+    }
+
+    int bordeIzquierdo = jugador->get_pos_y();
+    int bordeDerecho = bordeIzquierdo + jugador->get_ancho();
+
+    int bordeDerechoTuberia =
+        COL_TUBERIA + ANCHO_TUBERIA;
+
+    // Si Mario abandona la superficie, cae al suelo.
+    if (bordeDerecho <= COL_TUBERIA ||
+        bordeIzquierdo >= bordeDerechoTuberia) {
+
+        jugador->set_pos_x(
+            FILA_PISO - jugador->get_alto()
+        );
+
+        jugador->set_aire(false); //Con esto logramos que mario no vuele
+    }
+}
+
+bool Juego::centroSobreHueco() const {
+    int centro = jugador->get_pos_y() + jugador->get_ancho() / 2;
+    return centro >= INICIO_HUECO && centro < FIN_HUECO;
+}
+
+bool Juego::Supervisor(const std::string &comando)
+{
+    // Impedir atravesar la tuberia con movimientos horizontales o diagonales.
+    if (comando == "right" || comando == "up-right" || comando == "left" || comando == "up-left") {
+
+        int filaActual = jugador->get_pos_x();
+        int columnaNueva = jugador->get_pos_y();
+
+        if (comando == "right" || comando == "up-right") {
+            columnaNueva += PASO_HORIZ;
+        }
+        else {
+            columnaNueva -= PASO_HORIZ;
+        }
+        // Comprobar el recorrido horizontal.
+        if (chocaTuberia(filaActual, columnaNueva)) {
+            return false;
+        }
+
+        // Comprobar tambien la posicion elevada.
+        if (comando == "up-right" || comando == "up-left") 
+        {
+            if (filaActual - PASO_VERT < 0) {
+                return false;
+            }
+            if (chocaTuberia(filaActual - PASO_VERT, columnaNueva)) {
+                return false;
+            }
+        }
+    }
+    // No saltar fuera del mapani atravesar la tuberia verticalmente.
+    if (comando == "top" || comando == "up") {
+
+        int filaNueva = jugador->get_pos_x() - PASO_VERT;
+
+        if (filaNueva < 0 || chocaTuberia(filaNueva, jugador->get_pos_y())) {
+            return false;
+        }
+    }
+    // Si ninguna comprobacion rechazo el comando, el Supervisor permite continuar.
+    return true;
+}
+
+
+//--------------------------------------------
+// Métodos para guardar y cargar el juego
+//--------------------------------------------
+
+
+void Juego::guardar() {
+    std::cout << "Quiero al profesor Wilder\n";
+}
+
+void Juego::cargar() {
+    std::cout << "Quiero al profesor Wilder x2\n";
+}
+
+
+//--------------------------------------------
+// Constructor y destructor
+//--------------------------------------------
 
 Mapa * Juego::get_mapa() const {
     return mapa;}

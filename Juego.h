@@ -15,46 +15,60 @@
 class Juego {
 
 private:
-    Mapa* mapa{};                        // memoria dinamica
-    std::vector<Entidad*> entidades;   // enemigos creados con new
-    bool iniciado;                     // ya se escribio init
-    bool terminado;                    // Mario toco al goomba o se salio del programa
+    Mapa* mapa{};                       // memoria dinamica
+    Jugador* jugador{};                 // puntero al mismo Mario de entidades[0]
+    std::vector<Entidad*> entidades;    // Mario y enemigos creados con new
+
+    bool iniciado;                      // ya se escribio init
+    bool terminado;                     // Mario perdio o se salio del programa
+
 public:
     Juego();
     ~Juego();
 
-    // Métodos
+    // Metodos
 
-    void iniciar();    // init
-    void ejecutar();   // bucle principal: leer linea, separar comandos, procesar
+    void iniciar();     // init
+    void ejecutar();    // bucle principal: leer comandos y procesarlos
 
-    void guardar();    // save
-    void cargar();     // load
+    void guardar();     // save
+    void cargar();      // load
 
-    void crearElementos();                                       // piso, tuberia, arbustos, signos, ladrillos
-    bool procesarComando(const std::string& comando); // veces = n si se repite en la linea
+    void crearElementos();   // piso, tuberia, arbustos, signos, ladrillos
 
+    bool procesarComando(const std::string& comando);
+    bool Supervisor(const std::string& comando); //Implementado para la tuberia
+    // Tuberia: detectar proximidad y subir a ella.
+    bool CercaTUBERIA(const std::string& eleccion); //Si Mario esta cerca, usar su movimiento especial
+    void reposicionar(const std::string& eleccion); //Ejecuta el movimiento especial
+    // Hueco: detectar proximidad y esquivarlo.
+    bool CercaHUECO(const std::string& eleccion); //Si Mario esta cerca, usar su movimiento especial
+    void saltarHueco(const std::string& eleccion); //Ejecuta el movimiento especial
+    // Impedir atravesar la tuberia y permitir bajar de ella.
+    bool chocaTuberia(int fila, int columna) const; //No atravesar
+    void revisarApoyoTuberia();
+    //muerte por caida parcial
+    bool centroSobreHueco() const;
+    // Movimiento y animaciones
+    void moverEnemigos();    // mueve los dos Goombas una vez por turno
+    void animarSalto();      // dibuja los dos fotogramas del salto
+
+    // Evitar copias accidentales de los punteros.
     Juego(const Juego&);
     Juego& operator=(const Juego&);
-
-
-
     // Getters & Setters
 
-    Mapa * get_mapa() const;
-    void set_mapa(Mapa *mapa);
+    Mapa* get_mapa() const;
+    void set_mapa(Mapa* mapa);
 
-    std::vector<Entidad *> get_entidades() const;
-    void set_entidades(std::vector<Entidad *> entidades);
+    std::vector<Entidad*> get_entidades() const;
+    void set_entidades(std::vector<Entidad*> entidades);
 
     bool is_iniciado() const;
     void set_iniciado(bool iniciado);
 
     bool is_terminado() const;
     void set_terminado(bool terminado);
-
-    void moverEnemigos();              // Mueve los dos Goombas una vez por turno.
-    void animarSalto();                // NUEVO: dibuja los dos fotogramas del salto.
 };
 
-#endif //MARIO2_JUEGO_H
+#endif // MARIO2_JUEGO_H
