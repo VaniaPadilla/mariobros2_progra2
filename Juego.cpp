@@ -358,8 +358,13 @@ void Juego::animarSalto() {
 
     //Caja agotada o ladrillo
     if (tipo != '0') {
+        MUNDO fondo = mapa->get_mundo(); // Guardar el escenario antes de mostrar la moneda.
+        // Mostrar una moneda solo cuando la caja entrega un premio.
+        if (tipo == '*' && monedas > 0) {(*mapa) += Elemento("Moneda", ALTO_MONEDA, ANCHO_MONEDA,monedaS, 0, columnaBloque + 1, true, '0');}
         mapa->dibujarEscena();
         std::this_thread::sleep_for(std::chrono::milliseconds(200));
+        // Quitar la moneda y recuperar el escenario.
+        mapa->set_mundo(fondo);
     }
     // SEGUNDO FOTOGRAMA:
 

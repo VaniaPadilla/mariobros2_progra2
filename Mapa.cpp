@@ -46,6 +46,7 @@ void Mapa::agregarElemento(Elemento elementito) {
             if (fil<0 || fil>= filsMundo || col <0 || col >= colsMundo) continue;
             if (mundoMat[i][j] == TRANSPARENTE) continue;
 
+            if (elementito.get_nombre() == "Tuberia" && fil >= FILA_PISO) continue; //Tapar error de tuberia
             mundo[fil][col] = mundoMat[i][j];
             if (elementito.get_nombre() == "Signo") {
                 mundoCod[fil][col] = '*';}
@@ -217,7 +218,8 @@ void Mapa::dibujarEscena() const {
         for (int j = colInicialVentana; j < colInicialVentana + colsVentana; j++) {
             int celda = mundo[i][j];
 
-            for (const Entidad* enti : entidades) {
+            for (int indice = (int)entidades.size() - 1; indice >= 0; indice--) {
+                const Entidad* enti = entidades[indice];
                 int pos_x = enti->get_pos_x();
                 int pos_y = enti->get_pos_y();
 
