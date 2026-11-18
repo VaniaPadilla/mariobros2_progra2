@@ -91,7 +91,7 @@ void Juego::iniciar() {
     std::string clave;
 
     do {
-        std::cout << "ʕ⊙ᴥ⊙ʔ ";
+        std::cout << "(°<°)o/ ";
 
         // Si falla la lectura, terminar el programa.
         if (!(std::cin >> clave)) { //Es una medida de seguridad

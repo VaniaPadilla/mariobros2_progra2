@@ -224,17 +224,20 @@ void Mapa::dibujarEscena() const {
                 if (pos_x <= i && i < pos_x + enti->get_alto()
                     && pos_y <= j && j < pos_y + enti->get_ancho()) {
                     const MUNDO& matriz = enti->get_matriz();
-                    if (matriz[i - pos_x][j - pos_y] != TRANSPARENTE) {
-                        celda = matriz[i - pos_x][j - pos_y];
-                    }
+                     // para conservar visibles los elementos posteriores.
+                    if (matriz[i - pos_x][j - pos_y] != TRANSPARENTE && matriz[i - pos_x][j - pos_y] != C_FONDO) { // para conservar visibles los elementos posteriores.
+                        celda = matriz[i - pos_x][j - pos_y];}  // Superponer el color de la entidad sobre el escenario.
                 }
             }
+            // Convertir el color numerico a su codigo ANSI y añadir dos espacios coloreados que representan un pixel.
             lienzo += colorANSI(celda) + "  " + colorANSI(9);
         }
         lienzo += "\n";
     }
     
+    // Imprimir todo el escenario construido en una sola operacion.
     std::cout << lienzo;
+    // Mostrar debajo del escenario las monedas acumuladas por Mario.
     std::cout << "\ncoins: " << jugadorcito.get_coins() << "\n\n";
 }
 
